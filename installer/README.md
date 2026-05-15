@@ -1,13 +1,13 @@
 # installer/
 
-Idempotent bash installer that overlays the Thinker X400 plugins, configs,
-and services on top of an unmodified MainsailOS install.
+Idempotent bash installer that overlays the Thinker X400 plugins and configs
+on top of an unmodified MainsailOS install.
 
 ## Current status
 
 Implemented in Phase 5/6:
 
-- Variant-aware install entrypoint (`install.sh --variant x400_300|x400_350`)
+- Hotend-profile install entrypoint (`install.sh --variant x400_300|x400_350`)
 - Hotend selection (`--hotend 300|350`, or interactive prompt on TTY)
 - Preflight + path/user autodetection
 - Symlink deployment for Klipper extras, Moonraker components, and

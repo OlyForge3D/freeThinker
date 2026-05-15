@@ -27,8 +27,6 @@ KlipperScreen.
    │             │     ├─ chamber.cfg / runout.cfg / plr.cfg ...  │
    │             │     └─ moonraker.conf  (update_manager entry)  │
    │             │                                                │
-   │             └─► /etc/systemd/system/                          │
-   │                  └─ (no legacy farm/cloud units installed)   │
    │                                                              │
    │             (no upstream files modified in place)            │
    └──────────────────────────────────────────────────────────────┘

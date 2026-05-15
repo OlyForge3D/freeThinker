@@ -1,23 +1,14 @@
 # Hardware variants
 
-This project currently supports two explicit bed-size variant IDs used by
+This project currently supports two explicit hotend-profile variant IDs used by
 `install.sh --variant <id>`.
 
-## Bed variants
+## Supported hotend profiles
 
-| Variant id  | Bed     |
-|-------------|---------|
-| `x400_300`  | 300×300 |
-| `x400_350`  | 350×350 |
-
-## Hotend profiles
-
-Select with `--hotend <300|350>` (or via interactive prompt on TTY):
-
-| Hotend | Toolhead board      | Hotend max | EECAN include    | Pressure sensor firmware |
-|--------|---------------------|------------|------------------|--------------------------|
-| `300`  | `standard`          | 300°C      | `EECAN1_300.cfg` | `stm32_pressure_sensor_300.hex` |
-| `350`  | `high_temp_adc_v1`  | 350°C      | `EECAN1_350.cfg` | `stm32_pressure_sensor_350.hex` |
+| Variant id  | Toolhead board      | Hotend max | EECAN include    | Pressure sensor firmware |
+|-------------|---------------------|------------|------------------|--------------------------|
+| `x400_300`  | `standard`          | 300°C      | `EECAN1_300.cfg` | `stm32_pressure_sensor_300.hex` |
+| `x400_350`  | `high_temp_adc_v1`  | 350°C      | `EECAN1_350.cfg` | `stm32_pressure_sensor_350.hex` |
 
 350C upgrade guide:
 <https://eryonewiki.com/en/home/HotendUpgradeto350%C2%B0CAssemblyProcess>
@@ -34,8 +25,6 @@ instead of patched KlipperScreen console code:
 
 - `./install.sh --variant <x400_300|x400_350> --hotend <300|350>`
 
-Re-running `install.sh` with a different `--hotend` value switches profiles.
-
 ## Identification
 
 The installer currently requires explicit `--variant` and, for non-interactive
@@ -45,5 +34,5 @@ runs, explicit `--hotend`. Automatic hardware detection is not implemented.
 
 Open questions for future expansion:
 
-- Additional X400 SKUs (if any) beyond 300/350 beds.
+- Additional X400 SKUs (if any) beyond current hotend-profile mapping.
 - Whether 2.85 mm hotend support should become another `--hotend` profile.

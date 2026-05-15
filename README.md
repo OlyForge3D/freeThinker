@@ -26,18 +26,15 @@ forks and ships it as:
   AGPL-3.0 (matches upstream KlipperScreen).
 - **`installer/`** — idempotent bash installer that overlays the above onto
   an unmodified MainsailOS install. No hard-coded users or passwords.
-- **`config/`** — variant-aware printer config templates (300mm / 350mm
-  bed, toolhead board generations).
-- **`services/`** — reserved for optional service templates (none shipped by
-  default; legacy farm/cloud services intentionally excluded).
+- **`config/`** — hotend-profile-aware printer config templates.
 - **`profiles/`** — OrcaSlicer / Bambu Studio slicer profiles.
 
 ## Hardware variants
 
-| Variant   | Bed      | Hotend selection at install time |
-|-----------|----------|----------------------------------|
-| `x400_300` | 300×300 | `300` or `350`                  |
-| `x400_350` | 350×350 | `300` or `350`                  |
+| Variant profile | Meaning | Hotend max |
+|-----------------|---------|------------|
+| `x400_300`      | Standard hotend profile | 300°C |
+| `x400_350`      | High-temp hotend profile | 350°C |
 
 See [`docs/hardware_variants.md`](docs/hardware_variants.md).
 
@@ -63,7 +60,7 @@ The installer will:
 3. Install the Klipper extras, Moonraker components, and KlipperScreen
    panels via symlink.
 4. Drop variant-aware configs into `~/printer_data/config/`.
-5. Do not install legacy Eryone farm/cloud services.
+5. Keep legacy Eryone farm/cloud services out of scope.
 6. Register this repo with Moonraker's `update_manager`.
 
 ## Licensing

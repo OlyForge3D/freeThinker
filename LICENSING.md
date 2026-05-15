@@ -15,7 +15,7 @@ This applies in particular to:
   GPL-3.0.
 - `moonraker-eryone/` — derives from / interoperates with [Moonraker], which
   is GPL-3.0.
-- `installer/`, `config/`, `services/`, `profiles/`, `docs/`, `tests/`.
+- `installer/`, `config/`, `profiles/`, `docs/`, `tests/`.
 
 ## AGPL-3.0 (klipperscreen-eryone/ subtree)
 

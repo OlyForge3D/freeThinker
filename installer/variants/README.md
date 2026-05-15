@@ -2,7 +2,7 @@
 
 Each `*.env` file in this directory describes one Thinker X400 hardware
 configuration. The installer sources the selected file and uses the
-exported variables to determine bed-size defaults. Hotend-specific settings
+exported variables to determine hotend-profile defaults. Hotend-specific settings
 are selected at install time via `--hotend <300|350>` (or prompt).
 
 Required variables (subject to refinement during Phase 6):
@@ -10,8 +10,8 @@ Required variables (subject to refinement during Phase 6):
 | Variable                  | Example                                 |
 |---------------------------|-----------------------------------------|
 | `VARIANT_ID`              | `x400_350`                              |
-| `BED_SIZE_X`              | `350`                                   |
-| `BED_SIZE_Y`              | `350`                                   |
+| `BED_SIZE_X`              | `400`                                   |
+| `BED_SIZE_Y`              | `400`                                   |
 | `TOOLHEAD_REV`            | `high_temp_adc_v1` (hotend default)     |
 | `HOTEND_MAX_TEMP`         | `350` (hotend default)                  |
 | `EECAN_INCLUDE`           | `EECAN1_350.cfg` (hotend default)       |

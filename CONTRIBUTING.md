@@ -22,7 +22,7 @@ Thanks for your interest in improving the Thinker X400 overlay.
 ## Development
 
 - Lint everything before opening a PR:
-  - `shellcheck` on shell scripts under `installer/` and `services/`.
+  - `shellcheck` on shell scripts under `installer/` and `config/scripts/`.
   - `ruff check` on Python under `klipper-eryone/`, `moonraker-eryone/`,
     `klipperscreen-eryone/`.
 - Run unit tests with `pytest` (subdirectory READMEs explain mocking
