@@ -40,6 +40,7 @@
 
     test -L "${KLIPPER_DIR}/klippy/extras/eryone_plr.py"
     test -L "${MOONRAKER_DIR}/moonraker/components/eryone_metadata.py"
+    test ! -e "${MOONRAKER_DIR}/moonraker/components/eryone_file_manager.py"
     test -L "${KLIPPERSCREEN_DIR}/panels/eryone_statis.py"
     test -f "${CONFIG_DIR}/printer.cfg"
     test -f "${CONFIG_DIR}/x400.cfg"
@@ -50,6 +51,7 @@
     grep -q "command: ${CONFIG_DIR}/plr.sh" "${CONFIG_DIR}/x400.cfg"
     grep -q "command: ${CONFIG_DIR}/scripts/bed_object.sh" "${CONFIG_DIR}/x400.cfg"
     grep -q "^\\[include plr.cfg\\]$" "${CONFIG_DIR}/printer.cfg"
+    ! grep -q "^\\[eryone_file_manager\\]$" "${CONFIG_DIR}/moonraker.thinker-x400.conf"
   '
   [ "$status" -eq 0 ]
 }

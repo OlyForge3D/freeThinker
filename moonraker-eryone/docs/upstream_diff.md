@@ -37,7 +37,7 @@ Patch sizes:
 | Legacy path | Category | Evidence | Planned disposition |
 |-------------|----------|----------|---------------------|
 | `moonraker/moonraker/components/file_manager/metadata.py` | **B** | Large rewrite touching thumbnail parsing and metadata extraction behaviors | Re-implement as `moonraker-eryone/components/eryone_metadata.py` that extends upstream parser classes and only overrides Eryone slicer semantics. |
-| `moonraker/moonraker/components/file_manager/file_manager.py` | **B** | Upload temp path changed from `tempfile.gettempdir()` to hard-coded `/home/mks/printer_data/gcodes/` | Replace with overlay component/monkeypatch that derives path from runtime config (`printer_data`) with no hard-coded user paths. |
+| `moonraker/moonraker/components/file_manager/file_manager.py` | **B** | Upload temp path changed from `tempfile.gettempdir()` to hard-coded `/home/mks/printer_data/gcodes/` | Do not carry this patch; use stock upstream Moonraker temp upload behavior. |
 | `moonraker/moonraker/components/machine.py` | **B** | Referenced by legacy provisioning (`all/relink_conf.sh`) for direct copy into installed Moonraker tree | Re-check against baseline during implementation; port only if behavior is still needed for X400 hardware management. |
 | Moonraker config customizations (`config/moonraker.conf`, timelapse include, update_manager entries) | **C** | Stored outside source tree in legacy repo | Move into installer-rendered config templates under `config/`. |
 | Remaining broad snapshot drift in vendored Moonraker tree | **D** | 46 modified + 14 missing files at snapshot level | Do not port wholesale; keep upstream Moonraker untouched and implement only categorized B/C items. |
@@ -51,9 +51,9 @@ Patch sizes:
 
 ## Phase 3 implementation status
 
-- ✅ `components/eryone_file_manager.py` added to replace hard-coded
-  `/home/mks/...` upload temp path behavior.
 - ✅ `components/eryone_metadata.py` added as a metadata overlay that preserves
   upstream parsing and appends optional `eryone_hints`.
 - ✅ Legacy `machine.py` replacement path closed: no net X400-specific behavior
   remains after root-import delta analysis, so no machine overlay is installed.
+- ✅ Stock Moonraker upload temp-path behavior is used; no `file_manager`
+  monkeypatch is installed.
