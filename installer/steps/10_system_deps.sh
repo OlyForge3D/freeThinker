@@ -49,16 +49,8 @@ if ! command -v systemctl >/dev/null 2>&1; then
   log_warn "systemctl not found; service management steps will be skipped."
 fi
 
-if ! command -v nmap >/dev/null 2>&1; then
-  ensure_optional_deb_package "nmap" "LAN printer discovery for SCAN_ALL_PRINTER"
-fi
-
 if ! python3 -c 'import cv2, numpy' >/dev/null 2>&1; then
   ensure_optional_deb_package "python3-opencv" "camera bed detection for DETECT_BED_OBJECT"
-fi
-
-if ! command -v nmap >/dev/null 2>&1; then
-  log_warn "SCAN_ALL_PRINTER will be unavailable until nmap is installed."
 fi
 
 if ! python3 -c 'import cv2, numpy' >/dev/null 2>&1; then

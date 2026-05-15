@@ -20,5 +20,3 @@ config/
 
 - `scripts/bed_object.sh` invokes `scripts/cv.py` for the `DETECT_BED_OBJECT`
   hook used by `PRINT_START` when `use_ai` is enabled.
-- `scripts/scan.sh` backs the optional `SCAN_ALL_PRINTER` LAN discovery hook;
-  it is not part of the normal print path.
