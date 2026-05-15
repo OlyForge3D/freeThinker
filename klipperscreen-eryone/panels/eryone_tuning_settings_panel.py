@@ -158,14 +158,14 @@ class Panel(ScreenPanel):
 
             subprocess.run(["sync"], check=False)
             
-            # 显示重启消息
+            # Show restart message
             self._screen.show_popup_message(
                 _("Grid size changed to '{size}' Restarting Klipper...").format(size=grid_size),
                 level=1,
                 timeout=3
             )
             
-            # 延迟1秒后重启Klipper
+            # Restart Klipper after a 1 second delay
             GLib.timeout_add(1000, self._restart_klipper)
 
         except subprocess.CalledProcessError as e:
@@ -176,7 +176,7 @@ class Panel(ScreenPanel):
             self._screen.show_popup_message(_("Error: An unknown error occurred"), level=2, timeout=5)
 
     def _restart_klipper(self):
-        """重启Klipper服务"""
+        """Restart the Klipper service."""
         logging.info("Restarting Klipper service...")
         
         try:
@@ -193,7 +193,7 @@ class Panel(ScreenPanel):
         return False
 
     def activate(self):
-        # 每次激活面板时更新网格大小显示
+        # Refresh grid size label each time the panel is activated
         self._update_grid_size_label()
 
     def on_back(self):

@@ -281,7 +281,7 @@ void  BD_i2c_stop(void)
 int BD_i2c_read(void)
 {
 	
-//	u32 HX711_Read(void)	//增益128
+//	u32 HX711_Read(void)	// gain 128
 //	{
 		unsigned long count; 
 		unsigned char i; 
@@ -317,7 +317,7 @@ int BD_i2c_read(void)
 		} 
 		//HX711_SCK=1; 
 		BD_setHigh(scl_gpio);
-		count=count^0x800000;//第25个脉冲下降沿来时，转换数据
+		count=count^0x800000;// convert data on the falling edge of pulse 25
 		//delay_us(1);
 		ndelay_bd_c(delay_m);
 		//HX711_SCK=0;  
