@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [[ "${ENABLE_OPTIONAL_SERVICES:-0}" != "1" ]]; then
   log_info "Skipping optional services (set ENABLE_OPTIONAL_SERVICES=1 to enable)"
   return 0

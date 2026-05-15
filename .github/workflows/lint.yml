@@ -20,7 +20,8 @@ jobs:
             uninstall.sh \
             update.sh \
             installer/lib/common.sh \
-            installer/steps/*.sh
+            installer/steps/*.sh \
+            config/scripts/*.sh
 
   ruff:
     name: ruff

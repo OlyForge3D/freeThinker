@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 profiles_dst="$CONFIG_DIR/profiles"
 mkdir -p "$profiles_dst"
 

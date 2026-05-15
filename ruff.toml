@@ -1,0 +1,2 @@
+[lint.per-file-ignores]
+"klipperscreen-eryone/panels/eryone_*.py" = ["E402", "E701", "E702", "F401", "F821"]

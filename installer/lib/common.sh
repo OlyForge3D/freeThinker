@@ -95,6 +95,8 @@ render_template() {
     line=$0
     gsub(/\{\{PRINTER_USER\}\}/, ENVIRON["PRINTER_USER"], line)
     gsub(/\{\{PRINTER_HOME\}\}/, ENVIRON["PRINTER_HOME"], line)
+    gsub(/\{\{PRINTER_DATA_DIR\}\}/, ENVIRON["PRINTER_DATA_DIR"], line)
+    gsub(/\{\{CONFIG_DIR\}\}/, ENVIRON["CONFIG_DIR"], line)
     gsub(/\{\{EECAN_INCLUDE\}\}/, ENVIRON["EECAN_INCLUDE"], line)
     gsub(/\{\{REPO_ROOT\}\}/, ENVIRON["REPO_ROOT"], line)
     print line

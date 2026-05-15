@@ -55,5 +55,5 @@ Patch sizes:
   `/home/mks/...` upload temp path behavior.
 - ✅ `components/eryone_metadata.py` added as a metadata overlay that preserves
   upstream parsing and appends optional `eryone_hints`.
-- ⏳ Legacy `machine.py` behavior still needs a focused extraction pass to
-  determine whether any X400-specific logic remains necessary.
+- ✅ Legacy `machine.py` replacement path closed: no net X400-specific behavior
+  remains after root-import delta analysis, so no machine overlay is installed.

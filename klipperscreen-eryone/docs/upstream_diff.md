@@ -72,5 +72,6 @@ Largest modified files:
   - `eryone_tuning_settings_panel.py`
   - `eryone_chgfilament.py`
 - ✅ Removed hard-coded `/home/mks` path usage in imported panel code.
-- ⏳ High-churn upstream panel rewrites (`extrude.py`, `print.py`, `bed_mesh.py`)
-  are still inventory-only and need decomposition into focused overlays.
+- ✅ High-churn rewrites of upstream `extrude.py`, `print.py`, and `bed_mesh.py`
+  are intentionally not carried. X400-only behavior is delivered via
+  namespaced panels to avoid re-forking upstream core panels.

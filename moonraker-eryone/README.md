@@ -22,6 +22,8 @@ moonraker-eryone/
 - `components/eryone_metadata.py`
   - Keeps upstream metadata parsing and adds optional extraction of
     `; ERYONE_*=` comment hints into `metadata["eryone_hints"]`.
+- No `machine.py` overlay is shipped; legacy machine-level drift was analyzed
+  and intentionally not carried into the pluginized migration.
 
 ## Example Moonraker config
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 require_cmd awk
 require_cmd sed
 require_cmd install

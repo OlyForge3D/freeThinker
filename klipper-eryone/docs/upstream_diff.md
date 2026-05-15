@@ -60,7 +60,9 @@ X400-specific behavior only.
 ## Phase 2 implementation status
 
 - ✅ `extras/eryone_rc522.py` implemented.
-- ✅ Fallback patch queue added under `klipper-eryone/patches/`.
-- ✅ Pressure-sensor path decided as out-of-tree firmware source + manifest.
-- ⏳ `virtual_sdcard` PLR behavior remains patch-based until replaced by a
-  dedicated extra.
+- ✅ `extras/eryone_plr.py` implemented to replace the legacy
+  `virtual_sdcard.py` PLR patch.
+- ✅ Klipper patch queue retired; `klipper-eryone/patches/` now has no active
+  patches.
+- ✅ Pressure-sensor source and firmware artifacts are staged with checksums in
+  `firmware/MANIFEST.json`.

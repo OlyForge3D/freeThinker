@@ -86,4 +86,6 @@ hunk that came from a behavioral edit to upstream code, with one of:
 Any patch under `<component>/patches/` must declare the upstream SHA it
 applies to and be re-validated on every dependency bump.
 
+Current status: there are no active local source patches in this repo.
+
 [MainsailOS]: https://github.com/mainsail-crew/MainsailOS

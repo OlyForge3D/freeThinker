@@ -1,23 +1,31 @@
 {
   "schema_version": 1,
-  "generated_by": "phase2-klipper-extras",
+  "generated_by": "phase7-services-firmware-profiles",
+  "source_commit": "1ba5fc27d2691074a0147a914b792d107ab056fe",
   "notes": [
     "This manifest tracks X400-specific MCU firmware artifacts.",
-    "The pressure_sensor implementation is currently treated as an out-of-tree source patch.",
-    "Binary artifacts are intentionally not committed yet; add them in Phase 7 with checksums."
+    "The pressure_sensor implementation is treated as an out-of-tree source patch.",
+    "Firmware binaries were imported from legacy X400 release assets."
   ],
   "artifacts": [
     {
-      "name": "stm32_pressure_sensor_300",
-      "source": "klipper-eryone/firmware-src/pressure_sensor.c",
-      "status": "pending-build",
-      "sha256": null
+      "name": "stm32_pressure_sensor_300.hex",
+      "source": "legacy:docs/X400_firmware/pressure_sensor20250405.hex",
+      "status": "available",
+      "sha256": "b6be78082aa45b18046c59b71fe629bbc0442fe02443c06f7f43f02d50a8a2c7"
     },
     {
-      "name": "stm32_pressure_sensor_350",
-      "source": "klipper-eryone/firmware-src/pressure_sensor.c",
-      "status": "pending-build",
-      "sha256": null
+      "name": "stm32_pressure_sensor_350.hex",
+      "source": "legacy:docs/X400_firmware/STM32_pressure_sensor_350_20251110.hex",
+      "status": "available",
+      "sha256": "80837581d4d54060cd8beb00da939c586a85d70d28a0524e0ef43941549b7db3"
+    }
+  ],
+  "sources": [
+    {
+      "name": "pressure_sensor.c",
+      "path": "klipper-eryone/firmware-src/pressure_sensor.c",
+      "sha256": "f8388d49b4fa364c909edb294a24f8f0c8d6a3505eed948a0cea7498f10bf6bd"
     }
   ]
 }

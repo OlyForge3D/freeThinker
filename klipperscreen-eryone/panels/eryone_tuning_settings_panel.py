@@ -43,9 +43,9 @@ class Panel(ScreenPanel):
         grid.set_row_homogeneous(True)
 
         buttons_data = [
-            ("2x2", "color2"), ("3x3", "color3"), ("4x4", "color4"),
-            ("5x5", "color1"), ("6x6", "color2"), ("7x7", "color3"),
-            ("8x8", "color4"), ("9x9", "color1"), ("10x10", "color2"),
+            ("3x3", "color3"), ("4x4", "color4"), ("5x5", "color1"),
+            ("6x6", "color2"), ("7x7", "color3"), ("8x8", "color4"),
+            ("9x9", "color1"), ("10x10", "color2"),
         ]
 
         for i, (grid_size, color) in enumerate(buttons_data):

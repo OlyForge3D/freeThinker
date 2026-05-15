@@ -1,7 +1,7 @@
 # services/
 
-Templated systemd unit files. The installer substitutes `@USER@`,
-`@PRINTER_DATA@`, and any other placeholders at install time, then drops
+Templated systemd unit files. The installer substitutes `{{PRINTER_USER}}`,
+`{{PRINTER_HOME}}`, and any other placeholders at install time, then drops
 the rendered units into `/etc/systemd/system/` via the user's existing
 sudo rights.
 

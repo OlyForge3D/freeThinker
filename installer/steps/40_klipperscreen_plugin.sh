@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 panels_src="$REPO_ROOT/klipperscreen-eryone/panels"
 panels_dst="$KLIPPERSCREEN_DIR/panels"
 

@@ -3,9 +3,9 @@
 A clean overlay for [MainsailOS] that adds Eryone Thinker X400 support
 without forking Klipper, Moonraker, or KlipperScreen.
 
-> **Status:** active development. Phase 0-6 scaffolding is implemented
-> (inventory, plugin overlays, installer pipeline, variant templates), but
-> this is not a production release yet.
+> **Status:** active development. Plugin overlays, installer pipeline, variant
+> templates, and firmware manifests are implemented; continue validating on
+> target hardware before production rollout.
 
 ## What this is
 
@@ -35,8 +35,8 @@ forks and ships it as:
 
 | Variant   | Bed      | Toolhead | Hotend max |
 |-----------|----------|----------|------------|
-| `x400_300` | 300×300 | TBD      | TBD        |
-| `x400_350` | 350×350 | TBD      | 350°C      |
+| `x400_300` | 300×300 | standard | 300°C      |
+| `x400_350` | 350×350 | high_temp_adc_v1 | 350°C |
 
 See [`docs/hardware_variants.md`](docs/hardware_variants.md).
 

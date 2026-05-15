@@ -1,18 +1,36 @@
+#!/usr/bin/env bash
+
 template_dir="$REPO_ROOT/config/templates"
 
 # Install static config snippets
 for src in "$REPO_ROOT"/config/*; do
   base="$(basename "$src")"
   case "$base" in
-    README.md|templates|printer.cfg|moonraker.conf)
+    README.md|templates|scripts|printer.cfg|moonraker.conf)
       continue
       ;;
   esac
   [[ -f "$src" ]] || continue
   mode=0644
   [[ "$base" == "plr.sh" ]] && mode=0755
-  install_file "$src" "$CONFIG_DIR/$base" "$mode"
+  tmp_file="$(mktemp)"
+  render_template "$src" "$tmp_file"
+  install_file "$tmp_file" "$CONFIG_DIR/$base" "$mode"
+  rm -f "$tmp_file"
 done
+
+# Install helper scripts used by gcode_shell_command entries.
+if [[ -d "$REPO_ROOT/config/scripts" ]]; then
+  mkdir -p "$CONFIG_DIR/scripts"
+  for src in "$REPO_ROOT"/config/scripts/*.sh; do
+    [[ -f "$src" ]] || continue
+    base="$(basename "$src")"
+    tmp_file="$(mktemp)"
+    render_template "$src" "$tmp_file"
+    install_file "$tmp_file" "$CONFIG_DIR/scripts/$base" 0755
+    rm -f "$tmp_file"
+  done
+fi
 
 # Render printer.cfg from template and preserve SAVE_CONFIG block when present.
 tmp_printer="$(mktemp)"

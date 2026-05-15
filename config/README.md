@@ -10,7 +10,8 @@ Imported from legacy baseline in Phase 6 with a variant-aware
 
 ```
 config/
-├── *.cfg           # static snippets included from printer.cfg
+├── *.cfg           # snippets rendered by installer then included from printer.cfg
+├── scripts/        # helper scripts for gcode_shell_command hooks
 ├── templates/      # Jinja templates rendered by the installer
 └── README.md
 ```

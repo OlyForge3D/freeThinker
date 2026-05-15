@@ -28,7 +28,7 @@ klipperscreen-eryone/
 
 ## Status
 
-Phase 4 bootstrap imported legacy panel sources as namespaced overlays:
+The overlay ships these namespaced panel modules:
 
 - `panels/eryone_statis.py`
 - `panels/eryone_tuning_settings_panel.py`
@@ -36,3 +36,6 @@ Phase 4 bootstrap imported legacy panel sources as namespaced overlays:
 
 Hard-coded `/home/mks/...` paths were replaced with user-home-relative
 resolution where applicable.
+
+Legacy direct rewrites of upstream `extrude.py`, `print.py`, and `bed_mesh.py`
+are intentionally not carried in this repo to keep upstream tracking clean.

@@ -10,5 +10,7 @@ tests/
 Current tests:
 
 - `tests/klipper/test_eryone_rc522.py`
+- `tests/klipper/test_eryone_plr.py`
 - `tests/moonraker/test_eryone_metadata_overlay.py`
 - `tests/installer/install_help.bats`
+- `tests/installer/install_render_paths.bats`

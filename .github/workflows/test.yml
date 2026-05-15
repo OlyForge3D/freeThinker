@@ -25,4 +25,4 @@ jobs:
       - name: Install bats
         run: sudo apt-get update && sudo apt-get install -y bats
       - name: Run installer tests
-        run: bats tests/installer/install_help.bats
+        run: bats tests/installer/*.bats

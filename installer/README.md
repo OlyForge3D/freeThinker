@@ -13,7 +13,7 @@ Implemented in Phase 5/6:
   KlipperScreen panels
 - Config rendering (`printer.cfg` template + Moonraker include snippet)
 - Optional service installation (`ENABLE_OPTIONAL_SERVICES=1`)
-- Firmware manifest staging and slicer profile deployment
+- Firmware asset deployment (manifest + variant binaries) and slicer profiles
 
 ## Layout
 
@@ -43,6 +43,5 @@ Optional flags/environment:
 
 - `--printer-user <user>`: override auto-detected printer user.
 - `--force`: continue despite preflight warnings.
-- `APPLY_KLIPPER_PATCHES=1`: apply temporary Klipper patch queue.
 - `ENABLE_OPTIONAL_SERVICES=1`: install `services/*.service.in`.
 - `RESTART_SERVICES=1`: restart Klipper/Moonraker at end.

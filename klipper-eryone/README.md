@@ -27,10 +27,12 @@ klipper-eryone/
 
 - `extras/eryone_rc522.py` — out-of-tree RFID reader integration, extracted
   from legacy `rc522.py`.
-- `patches/` — temporary fallback queue for deltas that are not yet
-  pluginized (`bed_mesh`, `verify_heater`, `virtual_sdcard`, `queuelogger`).
-- `firmware/MANIFEST.json` + `firmware-src/README.md` — pressure-sensor
-  firmware staging (out-of-tree decision).
+- `extras/eryone_plr.py` — out-of-tree power-loss resume wrapper for
+  `SDCARD_PRINT_FILE`, replacing the legacy `virtual_sdcard.py` patch.
+- `patches/` — intentionally empty by default; reserved for exceptional,
+  version-pinned upstream hotfixes.
+- `firmware/MANIFEST.json` + `firmware-src/` — pressure-sensor source and
+  firmware artifacts with checksums (out-of-tree decision).
 
 ## Example config
 

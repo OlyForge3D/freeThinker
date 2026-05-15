@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 for cmd in git python3; do
   require_cmd "$cmd"
 done

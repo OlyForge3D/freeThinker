@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 components_src="$REPO_ROOT/moonraker-eryone/components"
 components_dst="$MOONRAKER_DIR/moonraker/components"
 
