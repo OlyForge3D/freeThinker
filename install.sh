@@ -6,8 +6,50 @@ export REPO_ROOT
 source "$REPO_ROOT/installer/lib/common.sh"
 
 VARIANT=""
+HOTEND=""
 INSTALL_PRINTER_USER=""
 FORCE=0
+HOTEND_GUIDE_URL="https://eryonewiki.com/en/home/HotendUpgradeto350%C2%B0CAssemblyProcess"
+
+apply_hotend_profile() {
+  case "$1" in
+    300)
+      HOTEND_MAX_TEMP=300
+      TOOLHEAD_REV=standard
+      EECAN_INCLUDE=EECAN1_300.cfg
+      PRESSURE_SENSOR_FIRMWARE=stm32_pressure_sensor_300.hex
+      ;;
+    350)
+      HOTEND_MAX_TEMP=350
+      TOOLHEAD_REV=high_temp_adc_v1
+      EECAN_INCLUDE=EECAN1_350.cfg
+      PRESSURE_SENSOR_FIRMWARE=stm32_pressure_sensor_350.hex
+      ;;
+    *)
+      fail "Invalid --hotend value '$1' (expected 300 or 350)"
+      ;;
+  esac
+}
+
+prompt_hotend_selection() {
+  local selected
+  log_info "Select installed hotend type:"
+  log_info "  300 = standard hotend (max 300C)"
+  log_info "  350 = high-temp hotend (max 350C)"
+  log_info "Guide: $HOTEND_GUIDE_URL"
+  while true; do
+    read -r -p "Enter hotend type (300 or 350): " selected || fail "Unable to read hotend selection"
+    case "$selected" in
+      300|350)
+        printf '%s\n' "$selected"
+        return 0
+        ;;
+      *)
+        log_warn "Invalid selection '$selected'. Please enter 300 or 350."
+        ;;
+    esac
+  done
+}
 
 usage() {
   cat <<'EOF'
@@ -15,6 +57,7 @@ Usage: ./install.sh --variant <x400_300|x400_350> [options]
 
 Options:
   --variant <id>         Required variant id
+  --hotend <300|350>     Hotend type (required for non-interactive installs)
   --printer-user <user>  Override detected printer user
   --force                Continue even if preflight warnings are detected
   -h, --help             Show this help
@@ -25,6 +68,10 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --variant)
       VARIANT="${2:-}"
+      shift 2
+      ;;
+    --hotend)
+      HOTEND="${2:-}"
       shift 2
       ;;
     --printer-user)
@@ -51,10 +98,20 @@ VARIANT_FILE="$REPO_ROOT/installer/variants/${VARIANT}.env"
 
 # shellcheck disable=SC1090
 source "$VARIANT_FILE"
-export VARIANT VARIANT_ID BED_SIZE_X BED_SIZE_Y TOOLHEAD_REV HOTEND_MAX_TEMP EECAN_INCLUDE PRESSURE_SENSOR_FIRMWARE
-export INSTALL_PRINTER_USER FORCE
 
-log_info "Installing thinker-x400 overlay (variant: $VARIANT_ID)"
+if [[ -z "$HOTEND" ]]; then
+  if [[ -t 0 ]]; then
+    HOTEND="$(prompt_hotend_selection)"
+  else
+    fail "--hotend is required in non-interactive mode (300 or 350). See: $HOTEND_GUIDE_URL"
+  fi
+fi
+
+apply_hotend_profile "$HOTEND"
+export VARIANT VARIANT_ID BED_SIZE_X BED_SIZE_Y TOOLHEAD_REV HOTEND_MAX_TEMP EECAN_INCLUDE PRESSURE_SENSOR_FIRMWARE
+export HOTEND INSTALL_PRINTER_USER FORCE
+
+log_info "Installing thinker-x400 overlay (variant: $VARIANT_ID, hotend: ${HOTEND}C)"
 
 for step in "$REPO_ROOT"/installer/steps/[0-9][0-9]_*.sh; do
   log_info "Running step $(basename "$step")"

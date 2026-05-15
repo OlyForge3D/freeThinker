@@ -33,10 +33,10 @@ forks and ships it as:
 
 ## Hardware variants
 
-| Variant   | Bed      | Toolhead | Hotend max |
-|-----------|----------|----------|------------|
-| `x400_300` | 300×300 | standard | 300°C      |
-| `x400_350` | 350×350 | high_temp_adc_v1 | 350°C |
+| Variant   | Bed      | Hotend selection at install time |
+|-----------|----------|----------------------------------|
+| `x400_300` | 300×300 | `300` or `350`                  |
+| `x400_350` | 350×350 | `300` or `350`                  |
 
 See [`docs/hardware_variants.md`](docs/hardware_variants.md).
 
@@ -45,8 +45,15 @@ See [`docs/hardware_variants.md`](docs/hardware_variants.md).
 ```sh
 git clone https://github.com/jpapiez/thinker-x400.git ~/thinker-x400
 cd ~/thinker-x400
-./install.sh --variant x400_350
+./install.sh --variant x400_350 --hotend 350
 ```
+
+If `--hotend` is omitted in an interactive terminal, the installer prompts for
+`300` or `350`. For non-interactive installs (CI/automation), pass
+`--hotend` explicitly.
+
+350C upgrade guidance:
+<https://eryonewiki.com/en/home/HotendUpgradeto350%C2%B0CAssemblyProcess>
 
 The installer will:
 

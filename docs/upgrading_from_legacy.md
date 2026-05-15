@@ -37,10 +37,14 @@ then copying back your printer configuration from backup.
 ```sh
 git clone https://github.com/jpapiez/thinker-x400.git "$HOME/thinker-x400"
 cd "$HOME/thinker-x400"
-./install.sh --variant x400_350
+./install.sh --variant x400_350 --hotend 350
 ```
 
-Use `x400_300` for 300 mm machines.
+Use `x400_300` for 300 mm beds. Set `--hotend 300` or `--hotend 350` to match
+your installed hotend.
+
+350C upgrade guide:
+<https://eryonewiki.com/en/home/HotendUpgradeto350%C2%B0CAssemblyProcess>
 
 ## 5. Validate and restart
 

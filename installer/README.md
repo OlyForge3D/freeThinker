@@ -8,6 +8,7 @@ and services on top of an unmodified MainsailOS install.
 Implemented in Phase 5/6:
 
 - Variant-aware install entrypoint (`install.sh --variant x400_300|x400_350`)
+- Hotend selection (`--hotend 300|350`, or interactive prompt on TTY)
 - Preflight + path/user autodetection
 - Symlink deployment for Klipper extras, Moonraker components, and
   KlipperScreen panels
@@ -36,12 +37,16 @@ installer/
 ## Usage
 
 ```sh
-./install.sh --variant x400_350
+./install.sh --variant x400_350 --hotend 350
 ```
 
 Optional flags/environment:
 
 - `--printer-user <user>`: override auto-detected printer user.
+- `--hotend <300|350>`: select installed hotend type.
 - `--force`: continue despite preflight warnings.
 - `ENABLE_OPTIONAL_SERVICES=1`: install `services/*.service.in`.
 - `RESTART_SERVICES=1`: restart Klipper/Moonraker at end.
+
+If `--hotend` is omitted and stdin is a TTY, the installer prompts for the
+selection. In non-interactive mode, `--hotend` is required.
