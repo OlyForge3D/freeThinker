@@ -22,12 +22,14 @@ done
 # Install helper scripts used by gcode_shell_command entries.
 if [[ -d "$REPO_ROOT/config/scripts" ]]; then
   mkdir -p "$CONFIG_DIR/scripts"
-  for src in "$REPO_ROOT"/config/scripts/*.sh; do
+  for src in "$REPO_ROOT"/config/scripts/*; do
     [[ -f "$src" ]] || continue
     base="$(basename "$src")"
+    mode=0644
+    [[ "$base" == *.sh ]] && mode=0755
     tmp_file="$(mktemp)"
     render_template "$src" "$tmp_file"
-    install_file "$tmp_file" "$CONFIG_DIR/scripts/$base" 0755
+    install_file "$tmp_file" "$CONFIG_DIR/scripts/$base" "$mode"
     rm -f "$tmp_file"
   done
 fi

@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cv_script="{{PRINTER_HOME}}/mainsail/all/cv.py"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cv_script="${script_dir}/cv.py"
 
 if [[ ! -f "$cv_script" ]]; then
   echo "[thinker-x400] bed_object hook skipped: missing $cv_script" >&2
+  exit 0
+fi
+
+if ! python3 -c 'import cv2, numpy' >/dev/null 2>&1; then
+  echo "[thinker-x400] bed_object hook skipped: missing python modules cv2/numpy" >&2
   exit 0
 fi
 

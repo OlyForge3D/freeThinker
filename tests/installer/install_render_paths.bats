@@ -45,6 +45,7 @@
     test -f "${CONFIG_DIR}/printer.cfg"
     test -f "${CONFIG_DIR}/x400.cfg"
     test -f "${CONFIG_DIR}/scripts/bed_object.sh"
+    test -f "${CONFIG_DIR}/scripts/cv.py"
     test -f "${CONFIG_DIR}/scripts/scan.sh"
     test -f "${CONFIG_DIR}/firmware/thinker-x400/stm32_pressure_sensor_350.hex"
 
