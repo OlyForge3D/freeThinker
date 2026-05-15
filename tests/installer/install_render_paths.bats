@@ -44,10 +44,14 @@
     test -L "${KLIPPERSCREEN_DIR}/panels/eryone_statis.py"
     test -f "${CONFIG_DIR}/printer.cfg"
     test -f "${CONFIG_DIR}/x400.cfg"
+    test -f "${CONFIG_DIR}/scripts/bed_object.sh"
+    test -f "${CONFIG_DIR}/scripts/scan.sh"
     test -f "${CONFIG_DIR}/firmware/thinker-x400/stm32_pressure_sensor_350.hex"
 
     grep -q "path: ${PRINTER_DATA_DIR}/gcodes" "${CONFIG_DIR}/mainsail.cfg"
     grep -q "command: ${CONFIG_DIR}/plr.sh" "${CONFIG_DIR}/x400.cfg"
+    grep -q "command: ${CONFIG_DIR}/scripts/bed_object.sh" "${CONFIG_DIR}/x400.cfg"
+    grep -q "command: ${CONFIG_DIR}/scripts/scan.sh" "${CONFIG_DIR}/x400.cfg"
     grep -q "^\\[include plr.cfg\\]$" "${CONFIG_DIR}/printer.cfg"
     ! grep -q "^\\[eryone_file_manager\\]$" "${CONFIG_DIR}/moonraker.thinker-x400.conf"
   '
