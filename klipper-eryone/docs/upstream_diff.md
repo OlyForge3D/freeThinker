@@ -56,3 +56,11 @@ X400-specific behavior only.
   and any pressure-sensor support required by the selected toolhead board.
 - No direct edits to upstream `klippy/extras/*.py` should survive into the new
   repo.
+
+## Phase 2 implementation status
+
+- ✅ `extras/eryone_rc522.py` implemented.
+- ✅ Fallback patch queue added under `klipper-eryone/patches/`.
+- ✅ Pressure-sensor path decided as out-of-tree firmware source + manifest.
+- ⏳ `virtual_sdcard` PLR behavior remains patch-based until replaced by a
+  dedicated extra.

@@ -11,13 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install shellcheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
       - name: Run shellcheck
-        uses: ludeeus/action-shellcheck@master
-        with:
-          scandir: ./installer
-          severity: warning
-        env:
-          SHELLCHECK_OPTS: -x
+        run: |
+          shellcheck \
+            install.sh \
+            uninstall.sh \
+            update.sh \
+            installer/lib/common.sh \
+            installer/steps/*.sh
 
   ruff:
     name: ruff
@@ -34,5 +37,4 @@ jobs:
           ruff check \
             klipper-eryone \
             moonraker-eryone \
-            klipperscreen-eryone \
-            || true  # non-blocking until source files exist
+            klipperscreen-eryone

@@ -3,7 +3,17 @@
 Idempotent bash installer that overlays the Thinker X400 plugins, configs,
 and services on top of an unmodified MainsailOS install.
 
-> **Status:** scaffold only. Implementation lands in Phase 5.
+## Current status
+
+Implemented in Phase 5/6:
+
+- Variant-aware install entrypoint (`install.sh --variant x400_300|x400_350`)
+- Preflight + path/user autodetection
+- Symlink deployment for Klipper extras, Moonraker components, and
+  KlipperScreen panels
+- Config rendering (`printer.cfg` template + Moonraker include snippet)
+- Optional service installation (`ENABLE_OPTIONAL_SERVICES=1`)
+- Firmware manifest staging and slicer profile deployment
 
 ## Layout
 
@@ -22,3 +32,17 @@ installer/
   references them with `[include ...]`.
 - Moonraker `update_manager` is configured to track this repo so users see
   updates in Mainsail.
+
+## Usage
+
+```sh
+./install.sh --variant x400_350
+```
+
+Optional flags/environment:
+
+- `--printer-user <user>`: override auto-detected printer user.
+- `--force`: continue despite preflight warnings.
+- `APPLY_KLIPPER_PATCHES=1`: apply temporary Klipper patch queue.
+- `ENABLE_OPTIONAL_SERVICES=1`: install `services/*.service.in`.
+- `RESTART_SERVICES=1`: restart Klipper/Moonraker at end.

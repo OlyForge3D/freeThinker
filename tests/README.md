@@ -7,4 +7,8 @@ tests/
 └── moonraker/   # pytest for moonraker components
 ```
 
-> **Status:** scaffold. Test scaffolding lands in Phase 8.
+Current tests:
+
+- `tests/klipper/test_eryone_rc522.py`
+- `tests/moonraker/test_eryone_metadata_overlay.py`
+- `tests/installer/install_help.bats`

@@ -28,5 +28,11 @@ klipperscreen-eryone/
 
 ## Status
 
-Empty scaffold. Phase 4 ports `statis.py`, `tuning_settings_panel.py`, the
-RFID-aware filament change panel, and the bedmap extension.
+Phase 4 bootstrap imported legacy panel sources as namespaced overlays:
+
+- `panels/eryone_statis.py`
+- `panels/eryone_tuning_settings_panel.py`
+- `panels/eryone_chgfilament.py`
+
+Hard-coded `/home/mks/...` paths were replaced with user-home-relative
+resolution where applicable.

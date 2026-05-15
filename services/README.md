@@ -5,5 +5,10 @@ Templated systemd unit files. The installer substitutes `@USER@`,
 the rendered units into `/etc/systemd/system/` via the user's existing
 sudo rights.
 
-> **Status:** scaffold. Units (`farm3d.service.in`, `cloud_mq.service.in`)
-> are added in Phase 7.
+Service templates available:
+
+- `farm3d.service.in`
+- `cloud_mq.service.in`
+
+Installer step `60_services.sh` installs and enables them only when
+`ENABLE_OPTIONAL_SERVICES=1`.

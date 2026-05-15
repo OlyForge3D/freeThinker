@@ -1,22 +1,57 @@
 # Upgrading from the legacy `thinker400_klipperscreen` install
 
-> **Status:** placeholder. The migration script will be implemented in
-> Phase 8.
+Legacy Eryone images modify upstream trees in-place and rely on
+`all/relink_conf.sh`. Migrate with the sequence below.
 
-If your printer is running Eryone's stock image (the one that puts
-everything under `/home/mks/...` and runs `all/relink_conf.sh` at boot),
-this page will describe how to migrate to the clean overlay.
+## 1. Backup current state
 
-Planned outline:
+Run as the printer user:
 
-1. **Backup.** The migration script will snapshot
-   `~/printer_data/config/`, `~/klipper`, `~/moonraker`, and
-   `~/KlipperScreen` to a timestamped tarball.
-2. **Detect legacy state.** Look for `relink_conf.sh`, `cloud_mq.service`,
-   the hard-coded `mks` user, and the `Bed_D*` sentinel directories.
-3. **Disable legacy hooks.** Remove the `relink_conf.sh` invocation from
-   `/etc/rc.local`, disable `cloud_mq.service` if undesired, restore any
-   files Eryone copied over upstream installs.
-4. **Reinstall upstream.** Reinstall Klipper, Moonraker, KlipperScreen
-   from their official sources at the SHAs this overlay is tested against.
-5. **Run `./install.sh`.** Apply the clean overlay.
+```sh
+STAMP="$(date +%Y%m%d-%H%M%S)"
+tar -czf "$HOME/thinker-x400-backup-${STAMP}.tar.gz" \
+  "$HOME/printer_data/config" \
+  "$HOME/klipper" \
+  "$HOME/moonraker" \
+  "$HOME/KlipperScreen"
+```
+
+## 2. Disable legacy relink hooks
+
+```sh
+sudo sed -i '/KlipperScreen\\/all\\/relink_conf\\.sh/d' /etc/rc.local
+sudo systemctl disable --now cloud_mq.service || true
+sudo systemctl disable --now farm3d.service || true
+```
+
+If `/etc/rc.local` has custom local content, remove only the relink line.
+
+## 3. Restore upstream application trees
+
+The safest route is reinstalling official Klipper, Moonraker, and
+KlipperScreen on top of MainsailOS (or re-imaging with stock MainsailOS),
+then copying back your printer configuration from backup.
+
+## 4. Install thinker-x400 overlay
+
+```sh
+git clone https://github.com/jpapiez/thinker-x400.git "$HOME/thinker-x400"
+cd "$HOME/thinker-x400"
+./install.sh --variant x400_350
+```
+
+Use `x400_300` for 300 mm machines.
+
+## 5. Validate and restart
+
+1. Confirm symlinks exist:
+   - `~/klipper/klippy/extras/eryone_*.py`
+   - `~/moonraker/moonraker/components/eryone_*.py`
+   - `~/KlipperScreen/panels/eryone_*.py`
+2. Confirm `~/printer_data/config/printer.cfg` includes the expected variant
+   include (`EECAN1_300.cfg` or `EECAN1_350.cfg`).
+3. Restart services if needed:
+
+```sh
+sudo systemctl restart klipper moonraker KlipperScreen.service
+```

@@ -64,3 +64,13 @@ Largest modified files:
   carrying broad forks of upstream `extrude.py` and `print.py`.
 - Any feature requiring upstream panel replacement should be made opt-in and
   version-gated.
+
+## Phase 4 implementation status
+
+- ✅ Imported and namespaced panel overlays:
+  - `eryone_statis.py`
+  - `eryone_tuning_settings_panel.py`
+  - `eryone_chgfilament.py`
+- ✅ Removed hard-coded `/home/mks` path usage in imported panel code.
+- ⏳ High-churn upstream panel rewrites (`extrude.py`, `print.py`, `bed_mesh.py`)
+  are still inventory-only and need decomposition into focused overlays.

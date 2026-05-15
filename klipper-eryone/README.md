@@ -23,7 +23,27 @@ klipper-eryone/
 2. Use a namespaced config section: `[eryone_<feature> ...]`.
 3. The installer will symlink it into `<klipper>/klippy/extras/`.
 
-## Status
+## Included in this phase
 
-Empty scaffold. Phase 1 (`docs/upstream_diff.md`) and Phase 2 (porting
-`rc522.py`, etc.) populate this directory.
+- `extras/eryone_rc522.py` — out-of-tree RFID reader integration, extracted
+  from legacy `rc522.py`.
+- `patches/` — temporary fallback queue for deltas that are not yet
+  pluginized (`bed_mesh`, `verify_heater`, `virtual_sdcard`, `queuelogger`).
+- `firmware/MANIFEST.json` + `firmware-src/README.md` — pressure-sensor
+  firmware staging (out-of-tree decision).
+
+## Example config
+
+```ini
+[eryone_rc522]
+address: 40
+speed: 100000
+moonraker_host: 127.0.0.1
+moonraker_port: 7125
+scan_timeout: 5.0
+```
+
+GCode command:
+
+- `M410 EXTRUDER=<n> SAVE=<0|1>` — scan RFID tag and optionally store parsed
+  material metadata in Moonraker's database namespace `rfid_tags`.

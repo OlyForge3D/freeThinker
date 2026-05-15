@@ -1,8 +1,5 @@
 # Developer setup
 
-> **Status:** placeholder. Will be expanded as the installer and tests
-> come online.
-
 ## Required tools
 
 - Python 3.11+
@@ -27,3 +24,9 @@ pytest tests/klipper tests/moonraker
 # Installer tests (in a MainsailOS-like Docker container)
 bats tests/installer/
 ```
+
+## CI workflows
+
+- `lint.yml` — shellcheck + ruff
+- `test.yml` — pytest + bats
+- `release.yml` — tagged tarball + SHA256 release assets

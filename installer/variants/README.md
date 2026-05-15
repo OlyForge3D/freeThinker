@@ -16,4 +16,7 @@ Required variables (subject to refinement during Phase 6):
 | `EECAN_INCLUDE`           | `EECAN1_350.cfg`                        |
 | `PRESSURE_SENSOR_FIRMWARE` | `stm32_pressure_sensor_350_<sha>.hex`  |
 
-> Variant files will be added in Phase 6.
+Current variants:
+
+- `x400_300.env`
+- `x400_350.env`

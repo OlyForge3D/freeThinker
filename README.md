@@ -3,8 +3,9 @@
 A clean overlay for [MainsailOS] that adds Eryone Thinker X400 support
 without forking Klipper, Moonraker, or KlipperScreen.
 
-> **Status:** early bootstrap. Not yet usable. See
-> [`docs/architecture.md`](docs/architecture.md).
+> **Status:** active development. Phase 0-6 scaffolding is implemented
+> (inventory, plugin overlays, installer pipeline, variant templates), but
+> this is not a production release yet.
 
 ## What this is
 
@@ -39,7 +40,7 @@ forks and ships it as:
 
 See [`docs/hardware_variants.md`](docs/hardware_variants.md).
 
-## Install (planned)
+## Install (development preview)
 
 ```sh
 git clone https://github.com/jpapiez/thinker-x400.git ~/thinker-x400

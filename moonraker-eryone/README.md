@@ -14,8 +14,23 @@ moonraker-eryone/
     └── upstream_diff.md
 ```
 
-## Status
+## Included in this phase
 
-Empty scaffold. Phase 3 implements `eryone_metadata.py` (replacing the
-current `metadata.py` rewrite by subclassing the upstream `MetadataExtractor`)
-and decides the fate of the 1-line `file_manager.py` change.
+- `components/eryone_file_manager.py`
+  - Replaces the legacy hard-coded upload temp path patch with a
+    runtime-configurable overlay (`upload_tmp_root`).
+- `components/eryone_metadata.py`
+  - Keeps upstream metadata parsing and adds optional extraction of
+    `; ERYONE_*=` comment hints into `metadata["eryone_hints"]`.
+
+## Example Moonraker config
+
+```ini
+[eryone_file_manager]
+# Optional; defaults to ~/printer_data/gcodes
+upload_tmp_root: ~/printer_data/gcodes
+
+[eryone_metadata]
+# Optional bytes to scan from gcode header for ERYONE_ hints
+hint_scan_bytes: 1048576
+```

@@ -1,0 +1,15 @@
+[Unit]
+Description=cloud_mq
+After=moonraker.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User={{PRINTER_USER}}
+WorkingDirectory={{PRINTER_HOME}}/KlipperScreen/mqtt/
+ExecStart={{PRINTER_HOME}}/KlipperScreen/mqtt/run.sh
+
+[Install]
+WantedBy=multi-user.target

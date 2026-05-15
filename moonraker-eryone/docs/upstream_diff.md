@@ -48,3 +48,12 @@ Patch sizes:
   tests per slicer flavor.
 - Any unavoidable monkeypatch must be version-gated by upstream Moonraker SHA
   and fail loudly on mismatch.
+
+## Phase 3 implementation status
+
+- ✅ `components/eryone_file_manager.py` added to replace hard-coded
+  `/home/mks/...` upload temp path behavior.
+- ✅ `components/eryone_metadata.py` added as a metadata overlay that preserves
+  upstream parsing and appends optional `eryone_hints`.
+- ⏳ Legacy `machine.py` behavior still needs a focused extraction pass to
+  determine whether any X400-specific logic remains necessary.

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "generated_by": "phase2-klipper-extras",
+  "notes": [
+    "This manifest tracks X400-specific MCU firmware artifacts.",
+    "The pressure_sensor implementation is currently treated as an out-of-tree source patch.",
+    "Binary artifacts are intentionally not committed yet; add them in Phase 7 with checksums."
+  ],
+  "artifacts": [
+    {
+      "name": "stm32_pressure_sensor_300",
+      "source": "klipper-eryone/firmware-src/pressure_sensor.c",
+      "status": "pending-build",
+      "sha256": null
+    },
+    {
+      "name": "stm32_pressure_sensor_350",
+      "source": "klipper-eryone/firmware-src/pressure_sensor.c",
+      "status": "pending-build",
+      "sha256": null
+    }
+  ]
+}

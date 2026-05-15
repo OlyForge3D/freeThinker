@@ -3,8 +3,8 @@
 Printer config snippets and Jinja templates dropped into
 `~/printer_data/config/` by the installer.
 
-> **Status:** scaffold. Configs are imported from the legacy repo and
-> templated in Phase 6.
+Imported from legacy baseline in Phase 6 with a variant-aware
+`templates/printer.cfg.j2`.
 
 ## Layout
 
