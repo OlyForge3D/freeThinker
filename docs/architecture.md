@@ -28,8 +28,7 @@ KlipperScreen.
    │             │     └─ moonraker.conf  (update_manager entry)  │
    │             │                                                │
    │             └─► /etc/systemd/system/                          │
-   │                  ├─ farm3d.service                           │
-   │                  └─ cloud_mq.service                         │
+   │                  └─ (no legacy farm/cloud units installed)   │
    │                                                              │
    │             (no upstream files modified in place)            │
    └──────────────────────────────────────────────────────────────┘

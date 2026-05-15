@@ -13,7 +13,6 @@ Implemented in Phase 5/6:
 - Symlink deployment for Klipper extras, Moonraker components, and
   KlipperScreen panels
 - Config rendering (`printer.cfg` template + Moonraker include snippet)
-- Optional service installation (`ENABLE_OPTIONAL_SERVICES=1`)
 - Firmware asset deployment (manifest + variant binaries) and slicer profiles
 
 ## Layout
@@ -45,7 +44,6 @@ Optional flags/environment:
 - `--printer-user <user>`: override auto-detected printer user.
 - `--hotend <300|350>`: select installed hotend type.
 - `--force`: continue despite preflight warnings.
-- `ENABLE_OPTIONAL_SERVICES=1`: install `services/*.service.in`.
 - `RESTART_SERVICES=1`: restart Klipper/Moonraker at end.
 
 If `--hotend` is omitted and stdin is a TTY, the installer prompts for the

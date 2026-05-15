@@ -28,7 +28,8 @@ forks and ships it as:
   an unmodified MainsailOS install. No hard-coded users or passwords.
 - **`config/`** — variant-aware printer config templates (300mm / 350mm
   bed, toolhead board generations).
-- **`services/`** — templated systemd units (`farm3d`, `cloud_mq`).
+- **`services/`** — reserved for optional service templates (none shipped by
+  default; legacy farm/cloud services intentionally excluded).
 - **`profiles/`** — OrcaSlicer / Bambu Studio slicer profiles.
 
 ## Hardware variants
@@ -62,7 +63,7 @@ The installer will:
 3. Install the Klipper extras, Moonraker components, and KlipperScreen
    panels via symlink.
 4. Drop variant-aware configs into `~/printer_data/config/`.
-5. Install templated systemd units.
+5. Do not install legacy Eryone farm/cloud services.
 6. Register this repo with Moonraker's `update_manager`.
 
 ## Licensing

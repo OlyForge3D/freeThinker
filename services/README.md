@@ -1,14 +1,9 @@
 # services/
 
-Templated systemd unit files. The installer substitutes `{{PRINTER_USER}}`,
-`{{PRINTER_HOME}}`, and any other placeholders at install time, then drops
-the rendered units into `/etc/systemd/system/` via the user's existing
-sudo rights.
+This directory is intentionally empty in the current `thinker-x400` scope.
 
-Service templates available:
+Legacy Eryone cloud/farm services (`farm3d`, `cloud_mq`) are intentionally not
+shipped by this overlay.
 
-- `farm3d.service.in`
-- `cloud_mq.service.in`
-
-Installer step `60_services.sh` installs and enables them only when
-`ENABLE_OPTIONAL_SERVICES=1`.
+Installer step `60_services.sh` remains as a no-op placeholder for future
+opt-in service templates, but no templates are currently provided.
