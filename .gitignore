@@ -20,3 +20,6 @@ dist/
 # Installer state
 installer/.state/
 *.log
+
+# Local analysis/cache artifacts
+.cache/
