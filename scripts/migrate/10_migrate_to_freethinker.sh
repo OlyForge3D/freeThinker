@@ -26,6 +26,9 @@
 #                             mainline KlipperScreen.
 #   4. Register [update_manager freeThinker] so the overlay self-updates.
 #   5. Hand off to the freeThinker installer to deploy configs/extras.
+#   6. STANDARDIZE BOOTLOADER SOURCE ON KATAPULT. Legacy ~/CanBoot or
+#      ~/canboot checkouts are migrated aside, then ~/katapult is cloned/
+#      updated from upstream and becomes the canonical bootloader source.
 #
 # Idempotent and POSIX sh compatible. Privileged steps (systemd, /etc) degrade
 # gracefully when not run as root; re-run with sudo to complete them.
@@ -331,16 +334,18 @@ done
 # builds and flashing tools.
 if [ -d "$KATAPULT_DIR/.git" ]; then
     run git -C "$KATAPULT_DIR" remote set-url origin "$KATAPULT_REPO"
-    run git -C "$KATAPULT_DIR" fetch origin --tags --prune 2>/dev/null || warn "  Katapult fetch failed — check network"
-    run git -C "$KATAPULT_DIR" checkout -q "$KATAPULT_BRANCH" 2>/dev/null || true
-    run git -C "$KATAPULT_DIR" reset --hard "origin/$KATAPULT_BRANCH" 2>/dev/null || true
+    run git -C "$KATAPULT_DIR" fetch origin --tags --prune 2>/dev/null || fatal "Failed to fetch Katapult from $KATAPULT_REPO"
+    run git -C "$KATAPULT_DIR" checkout -q "$KATAPULT_BRANCH" 2>/dev/null || fatal "Failed to checkout Katapult branch $KATAPULT_BRANCH"
+    run git -C "$KATAPULT_DIR" reset --hard "origin/$KATAPULT_BRANCH" 2>/dev/null || fatal "Failed to reset Katapult to origin/$KATAPULT_BRANCH"
     info "  Updated Katapult checkout at $KATAPULT_DIR"
 else
     [ -d "$KATAPULT_DIR" ] && run rm -rf "$KATAPULT_DIR"
     run git clone --branch "$KATAPULT_BRANCH" --single-branch \
-        "$KATAPULT_REPO" "$KATAPULT_DIR" || warn "  Failed to clone Katapult"
+        "$KATAPULT_REPO" "$KATAPULT_DIR" || fatal "Failed to clone Katapult from $KATAPULT_REPO"
     info "  Cloned Katapult to $KATAPULT_DIR"
 fi
+
+[ -f "$KATAPULT_DIR/scripts/flashtool.py" ] || fatal "Katapult flashtool missing at $KATAPULT_DIR/scripts/flashtool.py"
 
 # Compatibility symlink for older instructions/scripts that still reference
 # ~/canboot as a path.
