@@ -10,6 +10,7 @@ Katapult source instead of legacy `canboot` checkouts.
 ## Scripts
 
 - `discover_can_uuids.sh` - query uninitialized CAN devices.
+- `build_katapult_bootloaders.sh` - build Katapult bootloaders using exact imported X400 profiles.
 - `build_klipper_mcus.sh` - build separate Klipper binaries using profile files.
 - `flash_klipper_mcus_katapult.sh` - flash both binaries using Katapult.
 - `request_bootloader_and_query.sh` - request Katapult mode and verify with `-q` (no flashing).
@@ -21,9 +22,9 @@ Katapult source instead of legacy `canboot` checkouts.
 1. Mainline Klipper checkout exists at `~/klipper` (or set `KLIPPER_DIR`).
 2. Katapult checkout exists at `~/katapult` (or set `KATAPULT_DIR`).
 3. CAN interface is up (default: `can0`).
-4. You have validated MCU build profiles:
-   - `config/mcu-profiles/mainboard.config`
-   - `config/mcu-profiles/toolhead.config`
+4. Exact imported profile sets are present:
+  - Firmware: `config/mcu-firmware-configurations/`
+  - Bootloader: `config/mcu-bootloader-configurations/`
 
 ## One-time setup
 
@@ -40,7 +41,21 @@ cp config/mcu-update.env.example config/mcu-update.env
 - `TOOLHEAD_UUID`
 - optional `CAN_IFACE`
 
-3. Validate profile files under `config/mcu-profiles/` match your exact board bootloader offsets and MCU families.
+3. Validate profile files under these directories match your hardware:
+  - `config/mcu-firmware-configurations/`
+  - `config/mcu-bootloader-configurations/`
+
+## Build Katapult bootloaders (exact profiles)
+
+```sh
+./scripts/mcu/build_katapult_bootloaders.sh
+```
+
+Output files:
+
+- `out/bootloader/katapult_mainboard_stm32f407.bin`
+- `out/bootloader/katapult_toolhead_rp2040.bin`
+- `out/bootloader/katapult_toolhead_rp2040.uf2` (when produced by Katapult)
 
 ## Discover UUIDs
 
@@ -102,9 +117,8 @@ To also rewrite `config/canuid.cfg` with the provided UUIDs:
 
 ## Notes
 
-- Flash helpers prefer `~/katapult/scripts/flashtool.py` and fall back to
-  `~/klipper/lib/katapult/flashtool.py` for backward compatibility.
-- `toolhead.config` is a template starter and must be replaced with your validated menuconfig export.
+- Flash helpers require `~/katapult/scripts/flashtool.py`.
+- The default MCU and bootloader profiles are the exact imported X400 profiles.
 
 ## Infer offsets from reference snapshot (no SWD)
 
