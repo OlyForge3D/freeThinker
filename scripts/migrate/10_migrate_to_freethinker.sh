@@ -49,6 +49,9 @@ MAINLINE_MOONRAKER="${MAINLINE_MOONRAKER:-https://github.com/Arksine/moonraker.g
 MAINLINE_KLIPPERSCREEN="${MAINLINE_KLIPPERSCREEN:-https://github.com/KlipperScreen/KlipperScreen.git}"
 FREETHINKER_REPO="${FREETHINKER_REPO:-https://github.com/jpapiez/freeThinker.git}"
 FREETHINKER_BRANCH="${FREETHINKER_BRANCH:-main}"
+KATAPULT_REPO="${KATAPULT_REPO:-https://github.com/Arksine/katapult.git}"
+KATAPULT_BRANCH="${KATAPULT_BRANCH:-master}"
+KATAPULT_DIR="${KATAPULT_DIR:-$PRINTER_HOME/katapult}"
 
 # Pinned host commits for no-flash compatibility with the stock 2024 MCU
 # firmware (mainboard build 20240326, toolhead/EECAN build 20240409).
@@ -267,7 +270,7 @@ echo ""
 # PHASE 6 — UPDATE_MANAGER + HAND OFF TO INSTALLER
 # =============================================================================
 
-info "[6/6] freeThinker overlay + update_manager"
+info "[6/7] freeThinker overlay + update_manager"
 
 # Clone or refresh the freeThinker overlay repo.
 if [ -d "$FREETHINKER_DIR/.git" ]; then
@@ -302,6 +305,48 @@ FT_EOF
     fi
 else
     warn "  $MOONRAKER_CONF not found — installer will create it."
+fi
+
+# =============================================================================
+# PHASE 7 — CANBOOT -> KATAPULT (LATEST SOURCE CHECKOUT)
+# =============================================================================
+
+info "[7/7] Replacing legacy CanBoot checkout with latest Katapult source"
+
+# Remove/migrate common legacy canboot checkout locations to avoid using stale
+# sources by accident when building bootloaders.
+for legacy in "$PRINTER_HOME/canboot" "$PRINTER_HOME/CanBoot"; do
+    [ -e "$legacy" ] || continue
+    if [ "$legacy" = "$KATAPULT_DIR" ]; then
+        continue
+    fi
+    bn=$(basename "$legacy")
+    dst="$BACKUP_DIR/${bn}-legacy"
+    run rm -rf "$dst"
+    run mv "$legacy" "$dst"
+    info "  Moved legacy $legacy -> $dst"
+done
+
+# Ensure a fresh Katapult checkout from upstream is present for bootloader
+# builds and flashing tools.
+if [ -d "$KATAPULT_DIR/.git" ]; then
+    run git -C "$KATAPULT_DIR" remote set-url origin "$KATAPULT_REPO"
+    run git -C "$KATAPULT_DIR" fetch origin --tags --prune 2>/dev/null || warn "  Katapult fetch failed — check network"
+    run git -C "$KATAPULT_DIR" checkout -q "$KATAPULT_BRANCH" 2>/dev/null || true
+    run git -C "$KATAPULT_DIR" reset --hard "origin/$KATAPULT_BRANCH" 2>/dev/null || true
+    info "  Updated Katapult checkout at $KATAPULT_DIR"
+else
+    [ -d "$KATAPULT_DIR" ] && run rm -rf "$KATAPULT_DIR"
+    run git clone --branch "$KATAPULT_BRANCH" --single-branch \
+        "$KATAPULT_REPO" "$KATAPULT_DIR" || warn "  Failed to clone Katapult"
+    info "  Cloned Katapult to $KATAPULT_DIR"
+fi
+
+# Compatibility symlink for older instructions/scripts that still reference
+# ~/canboot as a path.
+if [ "$KATAPULT_DIR" != "$PRINTER_HOME/canboot" ]; then
+    run ln -sfn "$KATAPULT_DIR" "$PRINTER_HOME/canboot"
+    info "  Symlinked $PRINTER_HOME/canboot -> $KATAPULT_DIR"
 fi
 
 # Hand off to the freeThinker installer (deploys configs, extras, KS plugin).

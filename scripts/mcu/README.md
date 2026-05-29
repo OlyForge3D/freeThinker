@@ -1,8 +1,11 @@
 # MCU Build + Katapult Flash Workflow
 
 This folder contains a repeatable workflow to compile and deploy mainline
-Klipper firmware for both Thinker MCUs (mainboard + CAN toolhead), assuming
-Katapult is already installed on both boards.
+Klipper firmware for both Thinker MCUs (mainboard + CAN toolhead).
+
+The migration flow (`scripts/migrate/10_migrate_to_freethinker.sh`) now ensures
+`~/katapult` is cloned/updated from upstream so bootloader builds use the latest
+Katapult source instead of legacy `canboot` checkouts.
 
 ## Scripts
 
@@ -16,7 +19,7 @@ Katapult is already installed on both boards.
 ## Prerequisites
 
 1. Mainline Klipper checkout exists at `~/klipper` (or set `KLIPPER_DIR`).
-2. Katapult flashtool exists at `~/klipper/lib/katapult/flashtool.py`.
+2. Katapult checkout exists at `~/katapult` (or set `KATAPULT_DIR`).
 3. CAN interface is up (default: `can0`).
 4. You have validated MCU build profiles:
    - `config/mcu-profiles/mainboard.config`
@@ -99,7 +102,8 @@ To also rewrite `config/canuid.cfg` with the provided UUIDs:
 
 ## Notes
 
-- This workflow assumes Katapult is already present; it does not install or bootstrap Katapult itself.
+- Flash helpers prefer `~/katapult/scripts/flashtool.py` and fall back to
+  `~/klipper/lib/katapult/flashtool.py` for backward compatibility.
 - `toolhead.config` is a template starter and must be replaced with your validated menuconfig export.
 
 ## Infer offsets from reference snapshot (no SWD)
