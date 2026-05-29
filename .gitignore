@@ -23,3 +23,11 @@ installer/.state/
 
 # Local analysis/cache artifacts
 .cache/
+
+# Reference backup of the stock printer (reference/printer-home)
+# Exclude bulky print files; keep logs for investigation.
+reference/printer-home/printer_data/gcodes/
+reference/**/gcodes/
+# Keep reference logs even though *.log is ignored globally above.
+!reference/printer-home/printer_data/logs/
+!reference/printer-home/printer_data/logs/**
