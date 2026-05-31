@@ -15,15 +15,15 @@ from ks_includes.screen_panel import ScreenPanel
 class Panel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)
-        
+
         self.title = title
         self.labels = {}
         # API Endpoints
         self.totals_api_url = "http://127.0.0.1:7125/server/history/totals"
         self.history_list_api_url = "http://127.0.0.1:7125/server/history/list"
-        
+
         self.chart_data = None
-        
+
         screen_layout_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         title_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         title_box.set_margin_start(20)
@@ -75,12 +75,12 @@ class Panel(ScreenPanel):
 
         #============================================
 
-        # Create a horizontal box for button 
+        # Create a horizontal box for button
         button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
-        button_box.set_margin_start(20)    
-        button_box.set_margin_end(20)      
-        button_box.set_margin_bottom(20)   
-        button_box.set_halign(Gtk.Align.CENTER)  
+        button_box.set_margin_start(20)
+        button_box.set_margin_end(20)
+        button_box.set_margin_bottom(20)
+        button_box.set_halign(Gtk.Align.CENTER)
 
         #  Create reset button
         self.reset_button = Gtk.Button.new_with_label(_("Reset All Statistics"))
@@ -107,41 +107,41 @@ class Panel(ScreenPanel):
         style_context = self.reset_button.get_style_context()
         style_context.add_provider(css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
         style_context.add_class("warning-button")
-        
+
         # Add button to button box
         button_box.pack_start(self.reset_button, False, False, 0)
-        
+
         # Add button box to main layout
         screen_layout_box.pack_start(button_box, False, False, 0)
-        
-        self.reset_api_url = "http://127.0.0.1:7125/server/history/reset_totals"  
+
+        self.reset_api_url = "http://127.0.0.1:7125/server/history/reset_totals"
         self.delete_all_api_url  = "http://127.0.0.1:7125/server/history/job?all=true"
-            
+
     def _perform_reset(self,button = None):
 
         # Disable button to prevent repeated clicks
         self.reset_button.set_sensitive(False)
         self.reset_button.set_label(_("Resetting..."))
-        
+
         # how message in status bar
         self._screen.show_popup_message(_("Resetting statistics..."), level=1)
-        
+
         # Start background thread to perform reset
         thread = threading.Thread(target=self._reset_data_thread, daemon=True)
         thread.start()
-        
+
     def _reset_data_thread(self):
         try:
             # Send request to reset API
             response = requests.post(self.reset_api_url, timeout=10)
-            response.raise_for_status()  
+            response.raise_for_status()
 
             response = requests.delete(self.delete_all_api_url, timeout=10)
             response.raise_for_status()
-            
+
             # Parse response
             result = response.json()
-            
+
             if 'result' in result:
                 GLib.idle_add(self._on_reset_success)
             elif 'error' in result:
@@ -151,55 +151,53 @@ class Panel(ScreenPanel):
                 else:
                     GLib.idle_add(self._on_reset_error, error_msg)
             else:
-                GLib.idle_add(self._on_reset_success) 
-            
-                
+                GLib.idle_add(self._on_reset_success)
+
+
         except requests.exceptions.ConnectionError:
             error_msg = "Cannot connect to Moonraker"
             GLib.idle_add(self._on_reset_error, error_msg)
-            
+
         except requests.exceptions.Timeout:
             error_msg = "Request timeout"
             GLib.idle_add(self._on_reset_error, error_msg)
-            
+
         except requests.exceptions.RequestException as e:
             GLib.idle_add(self._on_reset_error, str(e))
-            
+
         except (KeyError, json.JSONDecodeError) as e:
             error_msg = f"Invalid response: {e}"
             GLib.idle_add(self._on_reset_error, error_msg)
-            
+
     def _on_reset_success(self):
 
         # Restore button state
         self.reset_button.set_sensitive(True)
         self.reset_button.set_label(_("Reset All Statistics"))
-        
+
         # Show success message
         self._screen.show_popup_message(_("Statistics reset successfully!"), level=1)
-        
-        
 
         # Refresh statistics display
-        self.update_stats() 
-        
+        self.update_stats()
+
         return False
-        
+
     def _on_reset_error(self, error_msg):
 
         # Restore button state
         self.reset_button.set_sensitive(True)
         self.reset_button.set_label(_("Reset All Statistics"))
-        
+
         # Show error message
         error_text = _("Reset failed: {}").format(error_msg)
         self._screen.show_popup_message(error_text, level=3)
-        
+
         # Log error
         logging.error(f"Statistics reset failed: {error_msg}")
-        
+
         return False
-        
+
         #============================================
 
     def activate(self):
@@ -223,7 +221,7 @@ class Panel(ScreenPanel):
         except requests.exceptions.RequestException as e:
             logging.error(f"Failed to get totals from API: {e}")
             GLib.idle_add(self._update_ui_error, "Error: No Connection")
-            return  
+            return
         except (KeyError, json.JSONDecodeError) as e:
             logging.error(f"Failed to parse totals API response: {e}")
             GLib.idle_add(self._update_ui_error, "Error: Invalid Data")
@@ -239,19 +237,19 @@ class Panel(ScreenPanel):
                 response_page.raise_for_status()
                 history_page_data = response_page.json()
                 jobs_chunk = history_page_data['result']['jobs']
-                
+
                 if not jobs_chunk:
                     break
-                
+
                 all_jobs.extend(jobs_chunk)
                 start_index += page_limit
 
                 if len(jobs_chunk) < page_limit:
                     break
-            
+
             full_history_result = {"jobs": all_jobs, "count": len(all_jobs)}
             GLib.idle_add(self._update_ui_chart, full_history_result)
-        
+
         except requests.exceptions.RequestException as e:
             logging.error(f"Failed to get history from API: {e}")
             GLib.idle_add(self._update_ui_chart_error)
@@ -263,7 +261,7 @@ class Panel(ScreenPanel):
         total_print_time = job_totals.get('total_print_time', 0)
         total_jobs = job_totals.get('total_jobs', 0)
         average_time = total_print_time / total_jobs if total_jobs > 0 else 0
-        
+
         self.labels['average_print_time'].set_text(self._format_time(average_time))
         self.labels['total_print_time'].set_text(self._format_time(total_print_time))
         self.labels['longest_print'].set_text(self._format_time(job_totals.get('longest_print', 0)))
@@ -277,15 +275,15 @@ class Panel(ScreenPanel):
         }
         for job in history_result.get('jobs', []):
             status = job.get('status')
-            if status == 'completed': 
+            if status == 'completed':
                 status_counts['finish_printing'] += 1
-            elif status == 'cancelled': 
+            elif status == 'cancelled':
                 status_counts['unprint'] += 1
-            elif status in ['klippy_shutdown', 'klippy_disconnect']: 
+            elif status in ['klippy_shutdown', 'klippy_disconnect']:
                 status_counts['klippy_closed'] += 1
-            else: 
+            else:
                 status_counts['other'] += 1
-        
+
         self.chart_data = [
             {"label": _("Finished"), "value": status_counts["finish_printing"], "color": (0.2, 0.7, 0.3)},
             {"label": _("Cancelled"), "value": status_counts["unprint"], "color": (0.9, 0.3, 0.2)},
@@ -296,19 +294,19 @@ class Panel(ScreenPanel):
         return False
 
     def _update_ui_error(self, message):
-        for key in self.labels: 
+        for key in self.labels:
             self.labels[key].set_text(message)
         self.chart_data = "error"
-        if hasattr(self, 'drawing_area'): 
+        if hasattr(self, 'drawing_area'):
             self.drawing_area.queue_draw()
         return False
 
     def _update_ui_chart_error(self):
         self.chart_data = "error"
-        if hasattr(self, 'drawing_area'): 
+        if hasattr(self, 'drawing_area'):
             self.drawing_area.queue_draw()
         return False
-    
+
     def _format_time(self, seconds_float):
         if seconds_float is None: return "N/A"
         total_seconds = int(seconds_float)
@@ -337,20 +335,22 @@ class Panel(ScreenPanel):
             ctx.arc(0, 0, radius, 0, 2 * math.pi)
             ctx.stroke()
             if self.chart_data == "error":
-                 ctx.select_font_face("sans-serif", 0, 0)
-                 ctx.set_font_size(14)
-                 (x, y, w, h, dx, dy) = ctx.text_extents("Error")
-                 ctx.move_to(-w/2, h/2)
-                 ctx.show_text("Error")
+                ctx.select_font_face("sans-serif", 0, 0)
+                ctx.set_font_size(14)
+                (x, y, w, h, dx, dy) = ctx.text_extents("Error")
+                ctx.move_to(-w/2, h/2)
+                ctx.show_text("Error")
             elif self.chart_data is None:
-                 ctx.select_font_face("sans-serif", 0, 0)
-                 ctx.set_font_size(14)
-                 (x, y, w, h, dx, dy) = ctx.text_extents("Loading...")
-                 ctx.move_to(-w/2, h/2)
-                 ctx.show_text("Loading...")
+                ctx.select_font_face("sans-serif", 0, 0)
+                ctx.set_font_size(14)
+                (x, y, w, h, dx, dy) = ctx.text_extents("Loading...")
+                ctx.move_to(-w/2, h/2)
+                ctx.show_text("Loading...")
             return
         total_value = sum(item['value'] for item in self.chart_data)
+
         if total_value == 0: return
+
         gap_angle = math.radians(4)
         num_segments = sum(1 for item in self.chart_data if item['value'] > 0)
         total_drawable_angle = 2 * math.pi - (num_segments * gap_angle) if num_segments > 1 else 2 * math.pi
@@ -416,4 +416,4 @@ class Panel(ScreenPanel):
             ctx.move_to(text_x, text_y)
             PangoCairo.show_layout(ctx, info['layout'])
 
-            
+

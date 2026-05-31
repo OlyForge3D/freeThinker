@@ -12,7 +12,6 @@ from ks_includes.screen_panel import ScreenPanel
 
 PRINTER_CFG_PATH = os.path.join(os.path.expanduser("~"), "printer_data", "config", "printer.cfg")
 
-
 class Panel(ScreenPanel):
 
     def __init__(self, screen, title):
@@ -23,10 +22,10 @@ class Panel(ScreenPanel):
         self.unload_filament = any("UNLOAD_FILAMENT" in macro.upper() for macro in macros)
 
         self.buttons = {
-           # 'extrude': self._gtk.Button("extrude", _("Extrude"), "color4"),
+            # 'extrude': self._gtk.Button("extrude", _("Extrude"), "color4"),
             'load': self._gtk.Button("arrow-down", _("Load"), "color3"),
             'unload': self._gtk.Button("arrow-up", _("Unload"), "color2"),
-           # 'retract': self._gtk.Button("retract", _("Retract"), "color1"),
+            # 'retract': self._gtk.Button("retract", _("Retract"), "color1"),
             'temperature': self._gtk.Button("heat-up", _("Set Temp"), ""),
         }
         #self.buttons['extrude'].connect("clicked", self.extrude, "+")
@@ -64,8 +63,8 @@ class Panel(ScreenPanel):
             if i < limit:
                 extgrid.attach(self.labels[extruder], i, 0, 1, 1)
                 i += 1
-       # if i < (limit - 1):
-       #     extgrid.attach(self.buttons['temperature'], i + 1, 0, 1, 1)
+            # if i < (limit - 1):
+            #     extgrid.attach(self.buttons['temperature'], i + 1, 0, 1, 1)
         self.adjust_temp = Gtk.Grid()
         self.adjust_temp.set_hexpand(True)
         self.adjust_temp.set_vexpand(True)
@@ -74,15 +73,15 @@ class Panel(ScreenPanel):
         self.adjust_temp.set_halign(Gtk.Align.CENTER)
         self.adjust_temp.set_valign(Gtk.Align.CENTER)
         self.adjust_temp.attach(self.button_pre_heat_0, 0, 0, 1, 1)
-        #self.adjust_temp.attach(self.button_pre_heat_1, 1, 0, 1, 1)
-        #self.adjust_temp.attach(self.button_pre_heat_2, 0, 1, 1, 1)
+        # self.adjust_temp.attach(self.button_pre_heat_1, 1, 0, 1, 1)
+        # self.adjust_temp.attach(self.button_pre_heat_2, 0, 1, 1, 1)
         try:
             with open(PRINTER_CFG_PATH, "r", encoding="utf-8") as fh:
                 version = fh.read()
         except OSError as err:
             logging.info("Unable to read printer.cfg at %s: %s", PRINTER_CFG_PATH, err)
             version = ""
-       # logging.info(f"### version  {version}")
+        # logging.info(f"### version  {version}")
         if 'EECAN1.cfg' in version:
             self.adjust_temp.attach(self.button_pre_heat_1, 1, 0, 1, 1)
             #if i < (limit - 1):
@@ -101,21 +100,21 @@ class Panel(ScreenPanel):
         grid.attach(extgrid, 0, 0, 4, 1)
 
         if self._screen.vertical_mode:
-           #grid.attach(self.buttons['extrude'], 0, 1, 2, 1)
-            #grid.attach(self.buttons['retract'], 2, 1, 2, 1)
+            # grid.attach(self.buttons['extrude'], 0, 1, 2, 1)
+            # grid.attach(self.buttons['retract'], 2, 1, 2, 1)
             grid.attach(self.buttons['load'], 0, 2, 2, 1)
             grid.attach(self.buttons['unload'], 2, 2, 2, 1)
-          #  grid.attach(distbox, 0, 3, 4, 1)
-         #   grid.attach(speedbox, 0, 4, 4, 1)
-          #  grid.attach(sensors, 0, 5, 4, 1)
+            # grid.attach(distbox, 0, 3, 4, 1)
+            # grid.attach(speedbox, 0, 4, 4, 1)
+            # grid.attach(sensors, 0, 5, 4, 1)
         else:
-           # grid.attach(self.buttons['extrude'], 0, 2, 1, 1)
+            # grid.attach(self.buttons['extrude'], 0, 2, 1, 1)
             grid.attach(self.buttons['load'], 1, 2, 1, 1)
             grid.attach(self.buttons['unload'], 2, 2, 1, 1)
-            #grid.attach(self.buttons['retract'], 3, 2, 1, 1)
-         #   grid.attach(distbox, 0, 3, 2, 1)
-         #   grid.attach(speedbox, 2, 3, 2, 1)
-         #   grid.attach(sensors, 0, 4, 4, 1)
+            # grid.attach(self.buttons['retract'], 3, 2, 1, 1)
+            # grid.attach(distbox, 0, 3, 2, 1)
+            # grid.attach(speedbox, 2, 3, 2, 1)
+            # grid.attach(sensors, 0, 4, 4, 1)
 
         self.content.add(grid)
 
@@ -127,9 +126,6 @@ class Panel(ScreenPanel):
         self.button_pre_heat_2.get_style_context().remove_class("distbutton_active")
         self.buttons['temperature'].get_style_context().remove_class("distbutton_active")
         widget.get_style_context().add_class("distbutton_active")
-
-
-
 
     def process_busy(self, busy):
         for button in self.buttons:
@@ -152,16 +148,15 @@ class Panel(ScreenPanel):
                 lines=2,
             )
             target = self._printer.get_dev_stat(x, "target")
-           # logging.info(f"### target  {target}")
+            # logging.info(f"### target  {target}")
             if target > 190 and target != self.target_old:
                 self.target_old = target
                 self.load_temp = target
-              #  self.buttons["temperature"].set_label(f'{target}')
+                # self.buttons["temperature"].set_label(f'{target}')
                 self.buttons['temperature'].get_style_context().add_class("distbutton_active")
                 self.button_pre_heat_0.get_style_context().remove_class("distbutton_active")
                 self.button_pre_heat_1.get_style_context().remove_class("distbutton_active")
                 self.button_pre_heat_2.get_style_context().remove_class("distbutton_active")
-
 
         if ("toolhead" in data and "extruder" in data["toolhead"] and
                 data["toolhead"]["extruder"] != self.current_extruder):
@@ -169,8 +164,6 @@ class Panel(ScreenPanel):
                 self.labels[extruder].get_style_context().remove_class("button_active")
             self.current_extruder = data["toolhead"]["extruder"]
             self.labels[self.current_extruder].get_style_context().add_class("button_active")
-
-
 
     def change_distance(self, widget, distance):
         logging.info(f"### Distance {distance}")
@@ -183,7 +176,6 @@ class Panel(ScreenPanel):
         for tool in self._printer.get_tools():
             self.labels[tool].get_style_context().remove_class("button_active")
         self.labels[extruder].get_style_context().add_class("button_active")
-
         self._screen._ws.klippy.gcode_script(f"T{self._printer.get_tool_number(extruder)}")
 
     def change_speed(self, widget, speed):

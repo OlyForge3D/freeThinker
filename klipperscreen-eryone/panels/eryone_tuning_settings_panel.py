@@ -19,7 +19,6 @@ DRIVE_MODE_CONFIGS = {
     "performance": "v1_2.cfg",
 }
 
-
 class Panel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)

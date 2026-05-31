@@ -17,7 +17,6 @@ if TYPE_CHECKING:
 
 ERYONE_HINT_RE = re.compile(r"^\s*;\s*ERYONE_(?P<key>[A-Z0-9_]+)\s*=\s*(?P<value>.+?)\s*$")
 
-
 class EryoneMetadataOverlay:
     def __init__(self, config: "ConfigHelper") -> None:
         self.server = config.get_server()
