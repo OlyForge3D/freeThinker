@@ -4,10 +4,10 @@
 # Purpose: Render and install printer and moonraker configuration files.
 #
 
-template_dir="$REPO_ROOT/config/templates"
+template_dir="$REPO_ROOT/config/printer/templates"
 
 # Install static config snippets
-for src in "$REPO_ROOT"/config/*; do
+for src in "$REPO_ROOT"/config/printer/*; do
   base="$(basename "$src")"
   case "$base" in
     README.md|templates|scripts|printer.cfg|moonraker.conf)
@@ -32,9 +32,9 @@ for src in "$REPO_ROOT"/config/*; do
 done
 
 # Install helper scripts used by gcode_shell_command entries.
-if [[ -d "$REPO_ROOT/config/scripts" ]]; then
+if [[ -d "$REPO_ROOT/config/printer/scripts" ]]; then
   mkdir -p "$CONFIG_DIR/scripts"
-  for src in "$REPO_ROOT"/config/scripts/*; do
+  for src in "$REPO_ROOT"/config/printer/scripts/*; do
     [[ -f "$src" ]] || continue
     base="$(basename "$src")"
     mode=0644

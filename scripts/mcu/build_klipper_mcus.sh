@@ -9,7 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 KLIPPER_DIR="${KLIPPER_DIR:-$HOME/klipper}"
-PROFILE_DIR="${PROFILE_DIR:-$REPO_ROOT/config/mcu-firmware-configurations}"
+PROFILE_DIR="${PROFILE_DIR:-$REPO_ROOT/config/support/mcu/mcu-firmware-configurations}"
 OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/out/mcu}"
 JOBS="${JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 4)}"
 

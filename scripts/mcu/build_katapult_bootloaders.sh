@@ -9,7 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 KATAPULT_DIR="${KATAPULT_DIR:-$HOME/katapult}"
-PROFILE_DIR="${PROFILE_DIR:-$REPO_ROOT/config/mcu-bootloader-configurations}"
+PROFILE_DIR="${PROFILE_DIR:-$REPO_ROOT/config/support/mcu/mcu-bootloader-configurations}"
 OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/out/bootloader}"
 JOBS="${JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 4)}"
 

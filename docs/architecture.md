@@ -62,7 +62,7 @@ max temperatures) are encoded as `installer/variants/<variant>.env` files.
 The installer:
 
 1. Sources the chosen variant file.
-2. Renders Jinja templates under `config/templates/` into
+2. Renders Jinja templates under `config/printer/templates/` into
    `~/printer_data/config/`.
 3. Installs the matching prebuilt MCU firmware from
    `klipper-eryone/firmware/`.

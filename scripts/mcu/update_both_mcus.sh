@@ -8,7 +8,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-ENV_FILE="${ENV_FILE:-$REPO_ROOT/config/mcu-update.env}"
+ENV_FILE="${ENV_FILE:-$REPO_ROOT/config/support/mcu/mcu-update.env}"
 UPDATE_CANUID_CFG=0
 CANUID_CFG="${CANUID_CFG:-$HOME/printer_data/config/canuid.cfg}"
 
@@ -35,7 +35,7 @@ usage() {
 Usage: ./scripts/mcu/update_both_mcus.sh [options]
 
 Options:
-  --env-file <path>         Path to env file (default: config/mcu-update.env)
+  --env-file <path>         Path to env file (default: config/support/mcu/mcu-update.env)
   --canuid-cfg <path>       Read UUID fallback from this canuid.cfg path
   --update-canuid-cfg       Write local config/local/canuid.cfg with provided UUIDs
   -h, --help                Show this help
@@ -70,7 +70,7 @@ done
 
 [[ -f "$ENV_FILE" ]] || {
   echo "Missing env file: $ENV_FILE" >&2
-  echo "Copy config/mcu-update.env.example to config/mcu-update.env and edit values." >&2
+  echo "Copy config/support/mcu/mcu-update.env.example to config/support/mcu/mcu-update.env and edit values." >&2
   exit 1
 }
 
@@ -90,7 +90,7 @@ fi
 is_valid_uuid "${MAINBOARD_UUID:-}" || { echo "MAINBOARD_UUID is required and must be 12 hex chars" >&2; exit 1; }
 is_valid_uuid "${TOOLHEAD_UUID:-}" || { echo "TOOLHEAD_UUID is required and must be 12 hex chars" >&2; exit 1; }
 
-PROFILE_DIR="${PROFILE_DIR:-$REPO_ROOT/config/mcu-firmware-configurations}"
+PROFILE_DIR="${PROFILE_DIR:-$REPO_ROOT/config/support/mcu/mcu-firmware-configurations}"
 OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/out/mcu}"
 CAN_IFACE="${CAN_IFACE:-can0}"
 

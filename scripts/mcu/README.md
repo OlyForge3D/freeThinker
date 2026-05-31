@@ -23,31 +23,31 @@ Katapult source instead of legacy `canboot` checkouts.
 2. Katapult checkout exists at `~/katapult` (or set `KATAPULT_DIR`).
 3. CAN interface is up (default: `can0`).
 4. Exact imported profile sets are present:
-  - Firmware: `config/mcu-firmware-configurations/`
-  - Bootloader: `config/mcu-bootloader-configurations/`
+  - Firmware: `config/support/mcu/mcu-firmware-configurations/`
+  - Bootloader: `config/support/mcu/mcu-bootloader-configurations/`
 
 ## One-time setup
 
 1. Copy env example:
 
 ```sh
-cp config/mcu-update.env.example config/mcu-update.env
+cp config/support/mcu/mcu-update.env.example config/support/mcu/mcu-update.env
 ```
 
-2. Edit `config/mcu-update.env` and set:
+2. Edit `config/support/mcu/mcu-update.env` and set:
 
 - `KLIPPER_DIR`
 - `MAINBOARD_UUID` (optional if present in `~/printer_data/config/canuid.cfg`)
 - `TOOLHEAD_UUID` (optional if present in `~/printer_data/config/canuid.cfg`)
 - optional `CAN_IFACE`
 
-If UUIDs are omitted in `config/mcu-update.env`, `update_both_mcus.sh` will
+If UUIDs are omitted in `config/support/mcu/mcu-update.env`, `update_both_mcus.sh` will
 auto-read them from `~/printer_data/config/canuid.cfg` by default.
 You can override this with `--canuid-cfg /path/to/canuid.cfg`.
 
 3. Validate profile files under these directories match your hardware:
-  - `config/mcu-firmware-configurations/`
-  - `config/mcu-bootloader-configurations/`
+  - `config/support/mcu/mcu-firmware-configurations/`
+  - `config/support/mcu/mcu-bootloader-configurations/`
 
 ## Build Katapult bootloaders (exact profiles)
 
@@ -100,7 +100,7 @@ Both UUIDs from env file:
 
 ```sh
 ./scripts/mcu/request_bootloader_and_query.sh \
-  --env-file config/mcu-update.env \
+  --env-file config/support/mcu/mcu-update.env \
   --python-bin /home/mks/klippy-env/bin/python
 ```
 
@@ -109,13 +109,13 @@ If a UUID does not appear in query output after `-r`, that MCU likely was not in
 ## Build + flash (recommended)
 
 ```sh
-./scripts/mcu/update_both_mcus.sh --env-file config/mcu-update.env
+./scripts/mcu/update_both_mcus.sh --env-file config/support/mcu/mcu-update.env
 ```
 
 To also write a local `config/local/canuid.cfg` with the provided UUIDs:
 
 ```sh
-./scripts/mcu/update_both_mcus.sh --env-file config/mcu-update.env --update-canuid-cfg
+./scripts/mcu/update_both_mcus.sh --env-file config/support/mcu/mcu-update.env --update-canuid-cfg
 ```
 
 ## Notes

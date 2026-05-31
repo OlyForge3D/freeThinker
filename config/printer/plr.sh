@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# File: config/plr.sh
+# File: config/printer/plr.sh
 # Purpose: Power-loss recovery helper script invoked by gcode_shell_command macros.
 #
 echo ${1}

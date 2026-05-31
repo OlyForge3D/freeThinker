@@ -37,9 +37,9 @@ Moonraker, KlipperScreen, and MainsailOS.
 | Upstream layer | Additions in this repo |
 |----------------|------------------------|
 | **Klipper** | `klipper-eryone/extras/eryone_plr.py` (power-loss resume wrapper for `SDCARD_PRINT_FILE`), `klipper-eryone/extras/eryone_rc522.py` (RFID reader + `M410`), plus out-of-tree pressure-sensor source/artifacts (`firmware-src/pressure_sensor.c`, `firmware/stm32_pressure_sensor_{300,350}.hex`, `firmware/MANIFEST.json`). |
-| **Moonraker** | `moonraker-eryone/components/eryone_metadata.py` adds parsing of `; ERYONE_*=` header hints into metadata (`eryone_hints`), and `config/templates/moonraker.thinker-x400.conf.j2` adds `[eryone_metadata]` + `[update_manager thinker-x400]`. |
+| **Moonraker** | `moonraker-eryone/components/eryone_metadata.py` adds parsing of `; ERYONE_*=` header hints into metadata (`eryone_hints`), and `config/printer/templates/moonraker.thinker-x400.conf.j2` adds `[eryone_metadata]` + `[update_manager thinker-x400]`. |
 | **KlipperScreen** | Namespaced panels only: `eryone_chgfilament.py`, `eryone_statis.py`, `eryone_tuning_settings_panel.py` (installed via symlink by `installer/steps/40_klipperscreen_plugin.sh`). The tuning panel includes a **Standard/Performance** drive-mode switch that toggles `printer.cfg` between `v1_1.cfg` and `v1_2.cfg` and restarts Klipper. |
-| **MainsailOS / printer_data config** | No Mainsail frontend fork. The overlay ships X400-specific config/macros (`config/templates/printer.cfg.j2`, `config/x400.cfg`, `config/chamber.cfg`, `config/plr.cfg`, `config/rc522.cfg`, `config/runout.cfg`, `config/v1_1.cfg`, `config/v1_2.cfg`, etc.) and runtime helper scripts (`config/scripts/bed_object.sh`, `config/scripts/cv.py`, `config/scripts/git_pull.sh`). |
+| **MainsailOS / printer_data config** | No Mainsail frontend fork. The overlay ships X400-specific config/macros from `config/printer/` (`templates/printer.cfg.j2`, `x400.cfg`, `chamber.cfg`, `plr.cfg`, `rc522.cfg`, `runout.cfg`, `v1_1.cfg`, `v1_2.cfg`, etc.) and runtime helper scripts (`config/printer/scripts/bed_object.sh`, `config/printer/scripts/cv.py`, `config/printer/scripts/git_pull.sh`). |
 
 ### Intentionally not carried
 
@@ -85,7 +85,7 @@ then apply overlay):
 To run MCU firmware build+flash at the end of install:
 
 ```sh
-./install.sh --variant x400_350 --hotend 350 --flash-mcus --mcu-env-file config/mcu-update.env
+./install.sh --variant x400_350 --hotend 350 --flash-mcus --mcu-env-file config/support/mcu/mcu-update.env
 ```
 
 350C upgrade guidance:

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# File: config/scripts/bed_object.sh
+# File: config/printer/scripts/bed_object.sh
 # Purpose: Capture and process bed image data for object detection hooks.
 #
 set -euo pipefail

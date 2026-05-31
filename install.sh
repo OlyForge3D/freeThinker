@@ -68,7 +68,7 @@ Options:
   --printer-user <user>  Override detected printer user
   --fresh-rebuild        Archive current stack and guide a clean base reinstall
   --flash-mcus           After install, run scripts/mcu/update_both_mcus.sh
-  --mcu-env-file <path>  Env file for --flash-mcus (default: config/mcu-update.env)
+  --mcu-env-file <path>  Env file for --flash-mcus (default: config/support/mcu/mcu-update.env)
   --force                Continue even if preflight warnings are detected
   -h, --help             Show this help
 EOF

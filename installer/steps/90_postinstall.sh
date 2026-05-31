@@ -20,7 +20,7 @@ fi
 log_info "Overlay files installed."
 
 if [[ "${FLASH_MCUS:-0}" == "1" ]]; then
-  mcu_env="${MCU_ENV_FILE:-$REPO_ROOT/config/mcu-update.env}"
+  mcu_env="${MCU_ENV_FILE:-$REPO_ROOT/config/support/mcu/mcu-update.env}"
   log_info "Running MCU flash workflow using env file: $mcu_env"
   "$REPO_ROOT/scripts/mcu/update_both_mcus.sh" --env-file "$mcu_env"
 fi
