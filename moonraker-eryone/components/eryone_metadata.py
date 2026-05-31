@@ -15,7 +15,10 @@ from typing import TYPE_CHECKING, Any, Callable, Dict, List
 if TYPE_CHECKING:
     from moonraker.confighelper import ConfigHelper
 
-ERYONE_HINT_RE = re.compile(r"^\s*;\s*ERYONE_(?P<key>[A-Z0-9_]+)\s*=\s*(?P<value>.+?)\s*$")
+ERYONE_HINT_RE = re.compile(
+    r"^\s*;\s*ERYONE_(?P<key>[A-Z0-9_]+)\s*=\s*(?P<value>.+?)\s*$"
+)
+
 
 class EryoneMetadataOverlay:
     def __init__(self, config: "ConfigHelper") -> None:

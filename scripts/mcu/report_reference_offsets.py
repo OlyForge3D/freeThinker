@@ -98,7 +98,11 @@ def parse_uf2_vectors(path: Path) -> List[Tuple[int, int, int]]:
             continue
 
         sp, rv = struct.unpack_from("<II", payload, 0)
-        if 0x20000000 <= sp <= 0x20080000 and 0x10000001 <= rv <= 0x10200000 and (rv & 1):
+        if (
+            0x20000000 <= sp <= 0x20080000
+            and 0x10000001 <= rv <= 0x10200000
+            and (rv & 1)
+        ):
             out.append((target, sp, rv))
 
     return out
@@ -139,7 +143,9 @@ def first_bytes_crc(path: Path, count: int = 256) -> int:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Infer likely MCU flash offsets from reference artifacts")
+    parser = argparse.ArgumentParser(
+        description="Infer likely MCU flash offsets from reference artifacts"
+    )
     parser.add_argument(
         "--reference-root",
         default="reference/printer-home",
@@ -190,7 +196,18 @@ def main() -> int:
         if path.suffix.lower() == ".uf2":
             vecs = parse_uf2_vectors(path)
             if not vecs:
-                findings.append(Finding(path, "rp2040", None, None, None, None, "low", "no vector-like UF2 payload found"))
+                findings.append(
+                    Finding(
+                        path,
+                        "rp2040",
+                        None,
+                        None,
+                        None,
+                        None,
+                        "low",
+                        "no vector-like UF2 payload found",
+                    )
+                )
                 continue
             target, sp, rv = min(vecs, key=lambda t: t[0])
             findings.append(
@@ -240,8 +257,12 @@ def main() -> int:
         print(f"  reason: {f.reason}")
 
     print("\nInterpretation:")
-    print("- high confidence means the file format embeds absolute target addresses (HEX/UF2)")
-    print("- low confidence BIN offsets are heuristics; confirm on hardware before flashing")
+    print(
+        "- high confidence means the file format embeds absolute target addresses (HEX/UF2)"
+    )
+    print(
+        "- low confidence BIN offsets are heuristics; confirm on hardware before flashing"
+    )
 
     # Key rollup for this printer class.
     rp = [f for f in findings if f.family == "rp2040" and f.base is not None]
@@ -256,7 +277,9 @@ def main() -> int:
         pretty = ", ".join(f"0x{x:08x}" for x in bases)
         print(f"STM32 candidate app starts found: {pretty}")
 
-    print("\nNote: This report reduces guesswork from the reference snapshot, but SWD is the final authority.")
+    print(
+        "\nNote: This report reduces guesswork from the reference snapshot, but SWD is the final authority."
+    )
     return 0
 
 

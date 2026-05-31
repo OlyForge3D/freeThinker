@@ -81,7 +81,9 @@ class _FakePrinter:
 
 
 class _FakeConfig:
-    def __init__(self, printer: _FakePrinter, pose_file: Path, script_file: Path) -> None:
+    def __init__(
+        self, printer: _FakePrinter, pose_file: Path, script_file: Path
+    ) -> None:
         self.printer = printer
         self.pose_file = pose_file
         self.script_file = script_file

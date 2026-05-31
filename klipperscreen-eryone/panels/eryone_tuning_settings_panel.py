@@ -19,6 +19,7 @@ DRIVE_MODE_CONFIGS = {
     "performance": "v1_2.cfg",
 }
 
+
 class Panel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)
@@ -32,7 +33,9 @@ class Panel(ScreenPanel):
         main_box.set_hexpand(True)
         main_box.set_vexpand(True)
 
-        self.current_drive_mode_label = self._gtk.Label(_("Current Drive Mode: Unknown"))
+        self.current_drive_mode_label = self._gtk.Label(
+            _("Current Drive Mode: Unknown")
+        )
         self.current_drive_mode_label.set_halign(Gtk.Align.CENTER)
         self.current_probe_count_label = self._gtk.Label(_("Current Grid Size: N/A"))
         self.current_probe_count_label.set_halign(Gtk.Align.CENTER)
@@ -83,7 +86,12 @@ class Panel(ScreenPanel):
 
         for index, (grid_size, color) in enumerate(buttons_data):
             button = self._gtk.Button(
-                "adjust", _(f"{grid_size} Grid"), color, self.bts, Gtk.PositionType.LEFT, 1
+                "adjust",
+                _(f"{grid_size} Grid"),
+                color,
+                self.bts,
+                Gtk.PositionType.LEFT,
+                1,
             )
             button.set_hexpand(True)
             button.connect("clicked", self._confirm_probe_count_change, grid_size)
@@ -95,7 +103,9 @@ class Panel(ScreenPanel):
         main_box.pack_start(self.current_drive_mode_label, False, False, 0)
         main_box.pack_start(mode_title_label, False, False, 0)
         main_box.pack_start(mode_grid, False, False, 0)
-        main_box.pack_start(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL), False, False, 0)
+        main_box.pack_start(
+            Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL), False, False, 0
+        )
         main_box.pack_start(self.current_probe_count_label, False, False, 0)
         main_box.pack_start(title_label, False, False, 0)
         main_box.pack_start(grid, False, False, 0)
@@ -170,7 +180,9 @@ class Panel(ScreenPanel):
     def _update_drive_mode(self, mode_key):
         target_cfg = DRIVE_MODE_CONFIGS.get(mode_key)
         if target_cfg is None:
-            self._screen.show_popup_message(_("Error: Invalid drive mode"), level=2, timeout=5)
+            self._screen.show_popup_message(
+                _("Error: Invalid drive mode"), level=2, timeout=5
+            )
             return
 
         active_mode = self._get_active_drive_mode()
@@ -212,8 +224,12 @@ class Panel(ScreenPanel):
                 fh.write(updated_cfg)
             subprocess.run(["sync"], check=False)
         except OSError as err:
-            logging.error("Failed to update drive mode in %s: %s", PRINTER_CFG_PATH, err)
-            self._screen.show_popup_message(_("Error: Failed to update printer.cfg"), level=2, timeout=5)
+            logging.error(
+                "Failed to update drive mode in %s: %s", PRINTER_CFG_PATH, err
+            )
+            self._screen.show_popup_message(
+                _("Error: Failed to update printer.cfg"), level=2, timeout=5
+            )
             return
 
         self._update_drive_mode_ui()
@@ -229,7 +245,9 @@ class Panel(ScreenPanel):
     def _update_grid_size_label(self):
         current_probe_count = self._get_current_probe_count()
         self.current_probe_count_label.set_text(
-            _("Current Grid Size: {probe_count}").format(probe_count=current_probe_count)
+            _("Current Grid Size: {probe_count}").format(
+                probe_count=current_probe_count
+            )
         )
 
     def _confirm_probe_count_change(self, widget, grid_size):
@@ -252,7 +270,11 @@ class Panel(ScreenPanel):
         label.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
 
         self.confirm_dialog = self._gtk.Dialog(
-            self._screen, buttons, label, self._on_probe_count_confirm_response, grid_size
+            self._screen,
+            buttons,
+            label,
+            self._on_probe_count_confirm_response,
+            grid_size,
         )
         self.confirm_dialog.set_title(_("Change Grid Size"))
 
@@ -275,7 +297,9 @@ class Panel(ScreenPanel):
             return None
         except FileNotFoundError:
             logging.error("Main config file not found: %s", PRINTER_CFG_PATH)
-            self._screen.show_popup_message(_("Error: printer.cfg not found"), level=2, timeout=5)
+            self._screen.show_popup_message(
+                _("Error: printer.cfg not found"), level=2, timeout=5
+            )
             return None
 
     def _get_current_probe_count(self):
@@ -298,13 +322,17 @@ class Panel(ScreenPanel):
                         return f"{match.group(1)}x{match.group(2)}"
             return _("Not Set")
         except OSError as err:
-            logging.error("Error reading probe_count from %s: %s", target_config_path, err)
+            logging.error(
+                "Error reading probe_count from %s: %s", target_config_path, err
+            )
             return _("Error")
 
     def _update_probe_count(self, grid_size):
         target_filename = self._get_active_config_file()
         if not target_filename:
-            logging.error("Could not determine the active EECAN config file from printer.cfg.")
+            logging.error(
+                "Could not determine the active EECAN config file from printer.cfg."
+            )
             self._screen.show_popup_message(
                 _("Error: Active config not found in printer.cfg"), level=2, timeout=5
             )
@@ -314,7 +342,9 @@ class Panel(ScreenPanel):
 
         try:
             if not os.path.exists(target_config_path):
-                logging.error("Target config file does not exist: %s", target_config_path)
+                logging.error(
+                    "Target config file does not exist: %s", target_config_path
+                )
                 self._screen.show_popup_message(
                     _("Error: Target config file does not exist"), level=2, timeout=5
                 )
@@ -328,7 +358,9 @@ class Panel(ScreenPanel):
             subprocess.run(["sync"], check=False)
 
             self._screen.show_popup_message(
-                _("Grid size changed to '{size}' Restarting Klipper...").format(size=grid_size),
+                _("Grid size changed to '{size}' Restarting Klipper...").format(
+                    size=grid_size
+                ),
                 level=1,
                 timeout=3,
             )
@@ -336,21 +368,31 @@ class Panel(ScreenPanel):
 
         except subprocess.CalledProcessError as err:
             logging.error("Failed to execute sed command: %s", err.stderr)
-            self._screen.show_popup_message(_("Error: Failed to update config file"), level=2, timeout=5)
+            self._screen.show_popup_message(
+                _("Error: Failed to update config file"), level=2, timeout=5
+            )
         except OSError as err:
-            logging.error("Unexpected filesystem error while updating probe_count: %s", err)
-            self._screen.show_popup_message(_("Error: An unknown error occurred"), level=2, timeout=5)
+            logging.error(
+                "Unexpected filesystem error while updating probe_count: %s", err
+            )
+            self._screen.show_popup_message(
+                _("Error: An unknown error occurred"), level=2, timeout=5
+            )
 
     def _restart_klipper(self):
         logging.info("Restarting Klipper service...")
 
         try:
-            self._screen._ws.send_method("machine.services.restart", {"service": "klipper"})
+            self._screen._ws.send_method(
+                "machine.services.restart", {"service": "klipper"}
+            )
             logging.info("Klipper restart command sent via Moonraker API")
         except Exception as err:
             logging.error("Error calling Moonraker API: %s", err)
             self._screen.show_popup_message(
-                _("Failed to restart Klipper through Moonraker API."), level=2, timeout=5
+                _("Failed to restart Klipper through Moonraker API."),
+                level=2,
+                timeout=5,
             )
 
         return False

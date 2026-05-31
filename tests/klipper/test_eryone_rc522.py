@@ -21,7 +21,10 @@ def _load_module():
 def test_extract_data_finds_marker():
     mod = _load_module()
     payload = "....en~ERYONE-PLA--FF00FF-FF-190-230-60-175-1000-2602~...."
-    assert mod.EryoneRC522.extract_data(payload) == "~ERYONE-PLA--FF00FF-FF-190-230-60-175-1000-2602~"
+    assert (
+        mod.EryoneRC522.extract_data(payload)
+        == "~ERYONE-PLA--FF00FF-FF-190-230-60-175-1000-2602~"
+    )
 
 
 def test_parse_rfid_string_success():

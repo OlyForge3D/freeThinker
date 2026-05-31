@@ -43,13 +43,19 @@ def _load_snapshot() -> Optional["np.ndarray"]:
     try:
         image_bytes = _http_get(SNAPSHOT_URL, timeout=2.0)
     except Exception as exc:
-        print(f"[thinker-x400] cv.py skipped: snapshot unavailable ({exc})", file=sys.stderr)
+        print(
+            f"[thinker-x400] cv.py skipped: snapshot unavailable ({exc})",
+            file=sys.stderr,
+        )
         return None
 
     image_array = np.asarray(bytearray(image_bytes), dtype="uint8")
     image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
     if image is None:
-        print("[thinker-x400] cv.py skipped: failed to decode webcam snapshot", file=sys.stderr)
+        print(
+            "[thinker-x400] cv.py skipped: failed to decode webcam snapshot",
+            file=sys.stderr,
+        )
         return None
     return image
 
@@ -84,7 +90,9 @@ def _scan_min_occupied_area(binary_mask: "np.ndarray") -> Tuple[int, int, int]:
         for x in range(START_X, width, WINDOW_STEP):
             if x > width - WINDOW_WIDTH:
                 continue
-            window_sum = int(np.sum(binary_mask[y : y + WINDOW_HEIGHT, x : x + WINDOW_WIDTH]))
+            window_sum = int(
+                np.sum(binary_mask[y : y + WINDOW_HEIGHT, x : x + WINDOW_WIDTH])
+            )
             occupied = total - window_sum
             if occupied < best:
                 best = occupied
@@ -125,7 +133,10 @@ def main() -> int:
             _send_gcode(f"M117 =bed_obj{occupied}")
             _send_gcode("PAUSE")
         except Exception as exc:
-            print(f"[thinker-x400] cv.py warning: failed to send PAUSE ({exc})", file=sys.stderr)
+            print(
+                f"[thinker-x400] cv.py warning: failed to send PAUSE ({exc})",
+                file=sys.stderr,
+            )
     return 0
 
 

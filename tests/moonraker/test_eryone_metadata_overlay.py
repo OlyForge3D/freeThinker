@@ -40,9 +40,7 @@ def test_extract_eryone_hints(tmp_path):
     overlay = mod.EryoneMetadataOverlay(cfg)
     gcode = tmp_path / "sample.gcode"
     gcode.write_text(
-        "; ERYONE_COLOR=FF00FF\n"
-        "; ERYONE_MATERIAL=PLA\n"
-        "G1 X10 Y10\n",
+        "; ERYONE_COLOR=FF00FF\n; ERYONE_MATERIAL=PLA\nG1 X10 Y10\n",
         encoding="utf-8",
     )
     hints = overlay._extract_eryone_hints(str(gcode))

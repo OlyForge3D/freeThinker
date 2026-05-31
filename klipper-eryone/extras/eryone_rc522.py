@@ -48,7 +48,9 @@ class EryoneRC522:
         self.reactor = self.printer.get_reactor()
         self.gcode = self.printer.lookup_object("gcode")
         if bus is None:
-            raise config.error("eryone_rc522 requires Klipper runtime (bus module unavailable)")
+            raise config.error(
+                "eryone_rc522 requires Klipper runtime (bus module unavailable)"
+            )
 
         # The legacy config used decimal 40 (0x28) as default.
         address = config.getint("address", 40)
@@ -210,7 +212,9 @@ class EryoneRC522:
             return fallback
 
     @classmethod
-    def parse_rfid_string(cls, data_str: str, extruder: int) -> Optional[Dict[str, Any]]:
+    def parse_rfid_string(
+        cls, data_str: str, extruder: int
+    ) -> Optional[Dict[str, Any]]:
         if not data_str.startswith("~"):
             return None
         parts = data_str[1:].split("-")
@@ -275,7 +279,9 @@ class EryoneRC522:
             )
             try:
                 with urllib.request.urlopen(request, timeout=5) as response:
-                    self.gcode.respond_info(f"RFID data saved (HTTP {response.getcode()})")
+                    self.gcode.respond_info(
+                        f"RFID data saved (HTTP {response.getcode()})"
+                    )
             except (urllib.error.URLError, TimeoutError, OSError) as exc:
                 self.gcode.respond_info(f"RFID save failed: {exc}")
 
