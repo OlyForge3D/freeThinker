@@ -1,4 +1,8 @@
 #!/bin/sh
+
+# File: scripts/migrate/20_install_python311.sh
+# Purpose: Install Python 3.11 and venv tooling required by migration scripts.
+#
 # freeThinker migration — install a modern Python (3.11) via pyenv for the
 # Moonraker and KlipperScreen virtualenvs, WITHOUT touching the system Python
 # that Armbian/Debian depend on.

@@ -20,3 +20,12 @@ config/
 
 - `scripts/bed_object.sh` invokes `scripts/cv.py` for the `DETECT_BED_OBJECT`
   hook used by `PRINT_START` when `use_ai` is enabled.
+
+## Machine-specific files
+
+- `canuid.cfg.template` is the tracked template with placeholder UUIDs.
+- `canuid.cfg` is treated as machine-specific during install/update.
+  The installer seeds `canuid.cfg` from the template only when missing and
+  preserves an existing one on subsequent runs.
+- Installer fails fast if `canuid.cfg` still contains template placeholders
+  (`000000000000`) or malformed UUID values.

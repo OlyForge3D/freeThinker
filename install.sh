@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# File: install.sh
+# Purpose: Entry point that applies variant-aware overlay installation steps.
+#
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -9,6 +13,9 @@ VARIANT=""
 HOTEND=""
 INSTALL_PRINTER_USER=""
 FORCE=0
+FRESH_REBUILD=0
+FLASH_MCUS=0
+MCU_ENV_FILE=""
 HOTEND_GUIDE_URL="https://eryonewiki.com/en/home/HotendUpgradeto350%C2%B0CAssemblyProcess"
 
 apply_hotend_profile() {
@@ -59,6 +66,9 @@ Options:
   --variant <id>         Required variant id
   --hotend <300|350>     Hotend type (required for non-interactive installs)
   --printer-user <user>  Override detected printer user
+  --fresh-rebuild        Archive current stack and guide a clean base reinstall
+  --flash-mcus           After install, run scripts/mcu/update_both_mcus.sh
+  --mcu-env-file <path>  Env file for --flash-mcus (default: config/mcu-update.env)
   --force                Continue even if preflight warnings are detected
   -h, --help             Show this help
 EOF
@@ -76,6 +86,18 @@ while [[ $# -gt 0 ]]; do
       ;;
     --printer-user)
       INSTALL_PRINTER_USER="${2:-}"
+      shift 2
+      ;;
+    --fresh-rebuild)
+      FRESH_REBUILD=1
+      shift
+      ;;
+    --flash-mcus)
+      FLASH_MCUS=1
+      shift
+      ;;
+    --mcu-env-file)
+      MCU_ENV_FILE="${2:-}"
       shift 2
       ;;
     --force)
@@ -109,9 +131,9 @@ fi
 
 apply_hotend_profile "$HOTEND"
 export VARIANT VARIANT_ID BED_SIZE_X BED_SIZE_Y TOOLHEAD_REV HOTEND_MAX_TEMP EECAN_INCLUDE PRESSURE_SENSOR_FIRMWARE
-export HOTEND INSTALL_PRINTER_USER FORCE
+export HOTEND INSTALL_PRINTER_USER FORCE FRESH_REBUILD FLASH_MCUS MCU_ENV_FILE
 
-log_info "Installing thinker-x400 overlay (variant: $VARIANT_ID, hotend: ${HOTEND}C)"
+log_info "Installing thinker-x400 overlay (variant: $VARIANT_ID, hotend: ${HOTEND}C, fresh_rebuild=${FRESH_REBUILD}, flash_mcus=${FLASH_MCUS})"
 
 for step in "$REPO_ROOT"/installer/steps/[0-9][0-9]_*.sh; do
   log_info "Running step $(basename "$step")"

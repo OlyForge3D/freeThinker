@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# File: installer/steps/80_slicer_profiles.sh
+# Purpose: Install bundled slicer profiles into printer_data config.
+#
+
 profiles_dst="$CONFIG_DIR/profiles"
 mkdir -p "$profiles_dst"
 

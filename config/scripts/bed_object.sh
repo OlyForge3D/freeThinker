@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# File: config/scripts/bed_object.sh
+# Purpose: Capture and process bed image data for object detection hooks.
+#
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

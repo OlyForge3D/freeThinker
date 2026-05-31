@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# File: installer/steps/90_postinstall.sh
+# Purpose: Run post-install actions such as service restart and optional MCU flash.
+#
+
 if [[ "${RESTART_SERVICES:-0}" == "1" ]]; then
   log_info "Restarting klipper and moonraker services"
   run_root_cmd systemctl restart klipper
@@ -14,3 +18,9 @@ else
 fi
 
 log_info "Overlay files installed."
+
+if [[ "${FLASH_MCUS:-0}" == "1" ]]; then
+  mcu_env="${MCU_ENV_FILE:-$REPO_ROOT/config/mcu-update.env}"
+  log_info "Running MCU flash workflow using env file: $mcu_env"
+  "$REPO_ROOT/scripts/mcu/update_both_mcus.sh" --env-file "$mcu_env"
+fi

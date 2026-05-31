@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# File: config/scripts/git_pull.sh
+# Purpose: Safely update the freeThinker checkout from git.
+#
 set -euo pipefail
 
 updater="{{REPO_ROOT}}/update.sh"

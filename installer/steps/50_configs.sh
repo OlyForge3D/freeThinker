@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# File: installer/steps/50_configs.sh
+# Purpose: Render and install printer and moonraker configuration files.
+#
+
 template_dir="$REPO_ROOT/config/templates"
 
 # Install static config snippets
@@ -15,7 +19,15 @@ for src in "$REPO_ROOT"/config/*; do
   [[ "$base" == "plr.sh" ]] && mode=0755
   tmp_file="$(mktemp)"
   render_template "$src" "$tmp_file"
-  install_file "$tmp_file" "$CONFIG_DIR/$base" "$mode"
+  if [[ "$base" == "canuid.cfg.template" ]]; then
+    # Keep a template for reference and seed canuid.cfg only on first install.
+    install_file "$tmp_file" "$CONFIG_DIR/$base" "$mode"
+    install_file_if_missing "$tmp_file" "$CONFIG_DIR/canuid.cfg" "$mode"
+    log_warn "Set machine-specific UUIDs in $CONFIG_DIR/canuid.cfg"
+    validate_canuid_cfg "$CONFIG_DIR/canuid.cfg"
+  else
+    install_file "$tmp_file" "$CONFIG_DIR/$base" "$mode"
+  fi
   rm -f "$tmp_file"
 done
 

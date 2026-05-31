@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# File: scripts/mcu/build_katapult_bootloaders.sh
+# Purpose: Build Katapult bootloader binaries from imported X400 profiles.
+#
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

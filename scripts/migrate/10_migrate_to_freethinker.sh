@@ -1,4 +1,8 @@
 #!/bin/sh
+
+# File: scripts/migrate/10_migrate_to_freethinker.sh
+# Purpose: Migrate existing X400 host from legacy layout to freeThinker overlay.
+#
 # freeThinker migration — one-time migration of an Eryone Thinker X400 from the
 # stock Eryone/Makerbase image to mainline Klipper + Moonraker + KlipperScreen,
 # managed by the freeThinker overlay.

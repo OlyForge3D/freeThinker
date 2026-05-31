@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# File: installer/steps/30_moonraker_components.sh
+# Purpose: Install or prune managed Moonraker component symlinks.
+#
+
 components_src="$REPO_ROOT/moonraker-eryone/components"
 components_dst="$MOONRAKER_DIR/moonraker/components"
 

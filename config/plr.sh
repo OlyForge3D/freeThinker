@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# File: config/plr.sh
+# Purpose: Power-loss recovery helper script invoked by gcode_shell_command macros.
+#
 echo ${1}
 echo ${2}
 #rm /tmp/plr.gcode

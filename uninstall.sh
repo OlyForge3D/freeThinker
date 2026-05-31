@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# File: uninstall.sh
+# Purpose: Remove thinker-x400 overlay links/configuration from host.
+#
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# File: scripts/mcu/request_bootloader_and_query.sh
+# Purpose: Request Katapult bootloader mode for UUIDs and query CAN visibility.
+#
 set -euo pipefail
 
 ENV_FILE=""

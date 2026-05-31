@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# File: scripts/migrate/00_capture_printer_state.sh
+# Purpose: Capture baseline printer state before migration.
+#
 #
 # freeThinker Phase 0 — read-only printer state capture.
 #

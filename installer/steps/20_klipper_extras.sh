@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# File: installer/steps/20_klipper_extras.sh
+# Purpose: Install or update Klipper extra module symlinks.
+#
+
 extras_src="$REPO_ROOT/klipper-eryone/extras"
 extras_dst="$KLIPPER_DIR/klippy/extras"
 

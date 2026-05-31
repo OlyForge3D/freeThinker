@@ -29,6 +29,20 @@ Thanks for your interest in improving the Thinker X400 overlay.
   klippy / moonraker).
 - Run installer tests with `bats tests/installer/`.
 
+### Shell script header convention
+
+All tracked `.sh` scripts should include this header block immediately after
+the shebang:
+
+```sh
+# File: <repo-relative-path>
+# Purpose: <one-line description of behavior and scope>
+#
+```
+
+Keep `Purpose` concrete and operational, especially for scripts that change
+printer state, rewrite config, or flash firmware.
+
 ## Commit messages
 
 Conventional Commits encouraged but not enforced:

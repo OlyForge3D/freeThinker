@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# File: installer/lib/common.sh
+# Purpose: Shared installer utility functions for logging, templating, and file operations.
+#
+
 log_info() {
   printf '[thinker-x400] %s\n' "$*"
 }
@@ -86,6 +90,19 @@ install_file() {
   log_info "Installed $dst"
 }
 
+install_file_if_missing() {
+  local src="$1"
+  local dst="$2"
+  local mode="${3:-0644}"
+  mkdir -p "$(dirname "$dst")"
+  if [[ -e "$dst" ]]; then
+    log_info "Preserving existing $dst"
+    return 0
+  fi
+  install -m "$mode" "$src" "$dst"
+  log_info "Installed default $dst"
+}
+
 render_template() {
   local src="$1"
   local dst="$2"
@@ -111,6 +128,24 @@ append_line_if_missing() {
     printf '\n%s\n' "$line" >> "$file"
     log_info "Appended to $file: $line"
   fi
+}
+
+validate_canuid_cfg() {
+  local cfg="$1"
+  [[ -f "$cfg" ]] || fail "Missing required config: $cfg"
+
+  local main_uuid tool_uuid
+  main_uuid="$(awk -F: '/^\[mcu\]/{section="main";next} /^\[/{section=""} section=="main" && /^canbus_uuid:/{gsub(/[[:space:]]/,"",$2); print tolower($2); exit}' "$cfg")"
+  tool_uuid="$(awk -F: '/^\[mcu EECAN\]/{section="tool";next} /^\[/{section=""} section=="tool" && /^canbus_uuid:/{gsub(/[[:space:]]/,"",$2); print tolower($2); exit}' "$cfg")"
+
+  [[ -n "$main_uuid" ]] || fail "Missing [mcu] canbus_uuid in $cfg"
+  [[ -n "$tool_uuid" ]] || fail "Missing [mcu EECAN] canbus_uuid in $cfg"
+
+  [[ "$main_uuid" =~ ^[0-9a-f]{12}$ ]] || fail "Invalid [mcu] canbus_uuid format in $cfg: $main_uuid"
+  [[ "$tool_uuid" =~ ^[0-9a-f]{12}$ ]] || fail "Invalid [mcu EECAN] canbus_uuid format in $cfg: $tool_uuid"
+
+  [[ "$main_uuid" != "000000000000" ]] || fail "Template placeholder UUID found for [mcu] in $cfg"
+  [[ "$tool_uuid" != "000000000000" ]] || fail "Template placeholder UUID found for [mcu EECAN] in $cfg"
 }
 
 run_root_cmd() {

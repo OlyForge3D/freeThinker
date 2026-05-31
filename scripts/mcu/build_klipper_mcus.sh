@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# File: scripts/mcu/build_klipper_mcus.sh
+# Purpose: Build Klipper firmware binaries for mainboard and toolhead MCUs.
+#
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

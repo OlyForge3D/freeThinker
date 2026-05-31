@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# File: installer/steps/70_firmware_assets.sh
+# Purpose: Install firmware assets and manifests for supported variants.
+#
+
 firmware_src="$REPO_ROOT/klipper-eryone/firmware"
 firmware_dst="$CONFIG_DIR/firmware/thinker-x400"
 

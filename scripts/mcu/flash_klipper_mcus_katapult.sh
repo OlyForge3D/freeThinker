@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# File: scripts/mcu/flash_klipper_mcus_katapult.sh
+# Purpose: Flash built Klipper firmware to both MCUs via Katapult over CAN.
+#
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

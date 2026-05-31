@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# File: installer/steps/10_system_deps.sh
+# Purpose: Check/install optional host dependencies used by overlay features.
+#
+
 for cmd in git python3 curl; do
   require_cmd "$cmd"
 done

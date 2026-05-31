@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# File: installer/steps/40_klipperscreen_plugin.sh
+# Purpose: Install KlipperScreen panel plugin symlinks.
+#
+
 panels_src="$REPO_ROOT/klipperscreen-eryone/panels"
 panels_dst="$KLIPPERSCREEN_DIR/panels"
 

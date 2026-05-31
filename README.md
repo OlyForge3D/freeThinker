@@ -75,6 +75,19 @@ If `--hotend` is omitted in an interactive terminal, the installer prompts for
 `300` or `350`. For non-interactive installs (CI/automation), pass
 `--hotend` explicitly.
 
+Fresh rebuild mode (archive existing stack, reinstall base stack via KIAUH,
+then apply overlay):
+
+```sh
+./install.sh --variant x400_350 --hotend 350 --fresh-rebuild
+```
+
+To run MCU firmware build+flash at the end of install:
+
+```sh
+./install.sh --variant x400_350 --hotend 350 --flash-mcus --mcu-env-file config/mcu-update.env
+```
+
 350C upgrade guidance:
 <https://eryonewiki.com/en/home/HotendUpgradeto350%C2%B0CAssemblyProcess>
 
