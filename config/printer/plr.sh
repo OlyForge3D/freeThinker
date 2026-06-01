@@ -50,14 +50,14 @@ echo 'G1 X395 Y50 E3.7 F12000' >> /tmp/plr.gcode
 echo 'G1 X395 Y130 E3.7 ' >> /tmp/plr.gcode
 echo 'G1 X395 Y50 E3.7 ' >> /tmp/plr.gcode
 echo 'G1 X395 Y130 E3.7 ' >> /tmp/plr.gcode
-echo 'G1 X395 Y50 E3.7 ' >> /tmp/plr.gcode      
-echo 'G1 X395 Y130 E3.7 ' >> /tmp/plr.gcode 
-echo 'G1 X395 Y50 E3.7 ' >> /tmp/plr.gcode      
-echo 'G1 X395 Y130 E3.7 ' >> /tmp/plr.gcode 
-echo 'G1 X395 Y50 E3.7 ' >> /tmp/plr.gcode      
-echo 'G1 X395 Y130 E3.7 ' >> /tmp/plr.gcode 
-echo 'G1 X395 Y50 E3.7 ' >> /tmp/plr.gcode      
-echo 'G1 X395 Y130 E3.7 ' >> /tmp/plr.gcode 
+echo 'G1 X395 Y50 E3.7 ' >> /tmp/plr.gcode
+echo 'G1 X395 Y130 E3.7 ' >> /tmp/plr.gcode
+echo 'G1 X395 Y50 E3.7 ' >> /tmp/plr.gcode
+echo 'G1 X395 Y130 E3.7 ' >> /tmp/plr.gcode
+echo 'G1 X395 Y50 E3.7 ' >> /tmp/plr.gcode
+echo 'G1 X395 Y130 E3.7 ' >> /tmp/plr.gcode
+echo 'G1 X395 Y50 E3.7 ' >> /tmp/plr.gcode
+echo 'G1 X395 Y130 E3.7 ' >> /tmp/plr.gcode
 
 echo 'G92 E0' >> /tmp/plr.gcode
 echo 'M106 S250' >> /tmp/plr.gcode
