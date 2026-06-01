@@ -20,6 +20,15 @@ The wiki references console commands from Eryone's legacy KlipperScreen fork:
 - `W` (query CAN UUIDs)
 - `V1_350` / `V1_300` (switch toolhead config include)
 
+Backward compatibility is restored in this project via macros in
+`config/printer/x400.cfg`, so these commands are accepted in the gcode console
+when the X400 macro set is loaded.
+
+Preferred equivalents in `freeThinker`:
+
+- CAN UUID query: `~/klipper/scripts/canbus_query.py can0`
+- Katapult query mode: `~/katapult/scripts/flashtool.py -i can0 -q`
+
 In `thinker-x400`, hotend profile selection is handled by installer args
 instead of patched KlipperScreen console code:
 
